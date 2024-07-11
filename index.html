@@ -3,9 +3,10 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>My Portfolio</title>
+    <title>Aaron's Portfolio</title>
     <link rel="stylesheet" href="style.css">
     <link rel="stylesheet" href="mediaqueries.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css" integrity="sha512-SnH5WK+bZxgPHs44uWIX+LLJAJ9/2PkPKZ5QiAj6Ta86w+fsb2TkcmfRyVX3pBnMFcV7oQPJkl9QevSCWr3W6A==" crossorigin="anonymous" referrerpolicy="no-referrer" />
 </head>
 <body>
     <nav id="desktop-nav">
@@ -16,6 +17,12 @@
                 <li><a href="#skills">Skills</a></li>
                 <li><a href="#projects">Projects</a></li>
                 <li><a href="#contact">Contacts</a></li>
+                <li><img 
+                    src="./assets/night-mode.png" 
+                    alt="Night mode icon"
+                    class="icon"
+                    onclick="darkMode()"
+                    /></li>
             </ul>
         </div>
     </nav>
@@ -33,13 +40,21 @@
                 <li><a href="#skills" onclick="toggleMenu()">Skills</a></li>
                 <li><a href="#projects" onclick="toggleMenu()">Projects</a></li>
                 <li><a href="#contact" onclick="toggleMenu()">Contacts</a></li>
+                <li><a><img 
+                    src="./assets/night-mode.png" 
+                    alt="Night mode icon"
+                    class="icon"
+                    onclick="darkMode()"
+                    /></a></li>
             </div>
         </div>
     </nav>
 
     <section id="profile">
         <div class="profile-pic-container">
-            <img src="./assets/profile-pic.png" alt="Aaron Bandado profile picture">
+            <img src="./assets/profile-pic-1.jpg" 
+            alt="Aaron Bandado profile picture"
+            id="profile-pic">
         </div>
 
         <div class="section-text">
@@ -47,7 +62,7 @@
             <h1 class="title">Aaron Bandado</h1>
             <p class="section-text-p2">Software Developer</p>
             <div class="btn-container">
-                <button class="btn btn-color-2" onclick="window.open('./assets/resume-example.pdf')">
+                <button class="btn btn-color-2" onclick="window.open('./assets/Aaron-Bandado-Resume.pdf')">
                     Download Resume
                 </button>
                 <button class="btn btn-color-1" onclick="location.href='./#contact'">
@@ -70,7 +85,12 @@
             </div>
 
         </div>
-
+        <img 
+        src="./assets/arrow.png" 
+        alt="Arrow Icon" 
+        class="icon arrow"
+        onclick="location.href='./#about'"
+        />
     </section>
 
     <section id="about">
@@ -80,8 +100,8 @@
         <div class="section-container">
             <div class="profile-pic-container">
                 <img 
-                src="./assets/about-pic.png" 
-                alt="Profile picture" 
+                src="./assets/about-pic.jpg" 
+                alt="About picture" 
                 class="about-pic"
                 />
             </div>
@@ -104,7 +124,7 @@
                         class="icon"
                         />
                         <h3>Education</h3>
-                        <p>B.Sc. Computer Engineering<br/></p>
+                        <p>B.Sc. Computer Engineering(2020-Present)<br/></p>
                     </div>
                 </div>
 
@@ -333,7 +353,7 @@
         src="./assets/arrow.png" 
         alt="Arrow Icon" 
         class="icon arrow"
-        onclick="location.href='./#contacts'"
+        onclick="location.href='./#contact'"
         />
     </section>
 
