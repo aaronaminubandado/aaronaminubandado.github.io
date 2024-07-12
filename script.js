@@ -5,16 +5,12 @@ function toggleMenu(){
     icon.classList.toggle("open");
 }
 
-// function darkMode() {
-//     var element = document.body;
-//     element.classList.toggle("dark-mode");
-// }
 
+// Function to toggle darkmode class for certain elements of the html
 function darkMode() {
     var element = document.body;
     element.classList.toggle("dark-mode");
 
-    // Toggle dark mode on other elements if needed
     var nav = document.querySelector('nav');
     var footer = document.querySelector('footer');
     var navLinks = document.querySelectorAll('.nav-links a');
