@@ -56,6 +56,29 @@
     }
 }
 
+@media screen and (max-width: 992px) {
+    section{
+        margin: 0 2.5rem;
+        padding: 3vh 0 5vh;
+    }
+
+    #profile {
+        gap: 3rem;
+    }
+
+    .article-container {
+        justify-content: flex-start;
+        gap: 1rem;
+    }
+
+    article {
+        width: 11rem;
+    }
+
+    .skills-details-container .about-containers {
+        gap: 1.25rem;
+    }
+}
 
 @media  screen and (max-width: 600px) {
     #contact, 
@@ -123,4 +146,28 @@
         text-align: justify;
     }
 
+    section{
+        margin: 0 1.5rem;
+        padding: 3vh 0 4vh;
+        min-height: auto;
+    }
+
+    article{
+        width: 100%;
+        justify-content: flex-start;
+    }
+
+    .article-container{
+        gap: 1rem;
+        justify-content: flex-start;
+    }
+
+    .btn-container{
+        justify-content: center;
+    }
+
+    #projects .details-container{
+        margin: 0 auto;
+        width: 100%;
+    }
 }

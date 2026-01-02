@@ -158,11 +158,10 @@ a:hover {
 }
 
 section {
-    padding-top: 4vh;
-    height: 96vh;
+    padding: 4vh 0 6vh;
     margin: 0 10rem;
     box-sizing: border-box;
-    min-height: fit-content;
+    min-height: 80vh;
 }
 
 .section-container {
@@ -174,7 +173,7 @@ section {
     display: flex;
     justify-content: center;
     gap: 5rem;
-    height: 80vh;
+    min-height: 70vh;
     position: relative;
 }
 
@@ -335,13 +334,13 @@ section {
     text-align: initial;
     flex-wrap: wrap;
     flex-direction: row;
-    gap: 2.5rem;
-    justify-content: space-around;
+    gap: 1.5rem;
+    justify-content: center;
 }
 
 article {
     display: flex;
-    width: 10rem;
+    width: 12rem;
     justify-content: space-around;
     gap: 0.5rem;
 }
