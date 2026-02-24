@@ -3,406 +3,368 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Aaron's Portfolio</title>
-    <link rel="stylesheet" href="style.css">
-    <link rel="stylesheet" href="mediaqueries.css">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css" integrity="sha512-SnH5WK+bZxgPHs44uWIX+LLJAJ9/2PkPKZ5QiAj6Ta86w+fsb2TkcmfRyVX3pBnMFcV7oQPJkl9QevSCWr3W6A==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <meta name="description" content="Aaron Bandado - Software Engineer Portfolio">
+    <title>Aaron Bandado | Software Engineer</title>
+    
+    <link rel="stylesheet" href="./styles/main.css">
+    
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 </head>
 <body>
-    <nav id="desktop-nav">
-        <div class="logo">Aaron Bandado</div>
-        <div>
+    <!-- Navigation -->
+    <header class="nav" role="banner">
+        <nav class="nav-container" aria-label="Main navigation">
+            <a href="#" class="nav-logo">Aaron Bandado</a>
+            
             <ul class="nav-links">
-                <li><a href="#about">About</a></li>
-                <li><a href="#skills">Skills</a></li>
-                <li><a href="#projects">Projects</a></li>
-                <li><a href="#contact">Contacts</a></li>
-                <li><img 
-                    src="./assets/night-mode.png" 
-                    alt="Night mode icon"
-                    class="icon"
-                    onclick="darkMode()"
-                    /></li>
+                <li><a href="#about" class="nav-link">About</a></li>
+                <li><a href="#skills" class="nav-link">Skills</a></li>
+                <li><a href="#projects" class="nav-link">Projects</a></li>
+                <li><a href="#contact" class="nav-link">Contact</a></li>
             </ul>
-        </div>
-    </nav>
 
-    <nav id="hamburger-nav">
-        <div class="logo">Aaron Bandado</div>
-        <div class="hamburger-menu">
-            <div class="hamburger-icon" onclick="toggleMenu()">
-                <span></span>
-                <span></span>
-                <span></span>
-            </div>
-            <div class="menu-links">
-                <li><a href="#about" onclick="toggleMenu()">About</a></li>
-                <li><a href="#skills" onclick="toggleMenu()">Skills</a></li>
-                <li><a href="#projects" onclick="toggleMenu()">Projects</a></li>
-                <li><a href="#contact" onclick="toggleMenu()">Contacts</a></li>
-                <li><a><img 
-                    src="./assets/night-mode.png" 
-                    alt="Night mode icon"
-                    class="icon"
-                    onclick="darkMode()"
-                    /></a></li>
-            </div>
-        </div>
-    </nav>
-
-    <section id="profile">
-        <div class="profile-pic-container">
-            <img src="./assets/profile-pic-1.jpg" 
-            alt="Aaron Bandado profile picture"
-            id="profile-pic">
-        </div>
-
-        <div class="section-text">
-            <p class="section-text-p1">Hello, I'm</p>
-            <h1 class="title">Aaron Bandado</h1>
-            <p class="section-text-p2">Software Engineer</p>
-            <div class="btn-container">
-                <button class="btn btn-color-2" onclick="window.open('./assets/Aaron Aminu Bandado Resume.pdf')">
-                    Download Resume
+            <div class="nav-actions">
+                <button id="theme-toggle" class="theme-toggle" aria-label="Toggle dark mode">
+                    <svg class="sun-icon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
+                        <circle cx="12" cy="12" r="5"></circle>
+                        <path d="M12 1v2M12 21v2M4.22 4.22l1.42 1.42M18.36 18.36l1.42 1.42M1 12h2M21 12h2M4.22 19.78l1.42-1.42M18.36 5.64l1.42-1.42"></path>
+                    </svg>
+                    <svg class="moon-icon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true" style="display: none;">
+                        <path d="M21 12.79A9 9 0 1111.21 3 7 7 0 0021 12.79z"></path>
+                    </svg>
                 </button>
-                <button class="btn btn-color-1" onclick="location.href='./#contact'">
-                    Contact Info
+
+                <button id="hamburger" class="nav-hamburger" aria-label="Toggle mobile menu" aria-expanded="false" aria-controls="mobile-nav">
+                    <span></span>
+                    <span></span>
+                    <span></span>
                 </button>
             </div>
+        </nav>
 
-            <div id="socials-container">
-                <img src="./assets/linkedin.png" 
-                alt="My LinkedIn profile" 
-                class="icon" 
-                onclick="location.href='https://www.linkedin.com/in/aaron-bandado-13749a202/'"
-                target="_blank"
-                />
+        <nav id="mobile-nav" class="nav-mobile" hidden aria-label="Mobile navigation">
+            <ul class="nav-mobile-links">
+                <li><a href="#about" class="nav-mobile-link">About</a></li>
+                <li><a href="#skills" class="nav-mobile-link">Skills</a></li>
+                <li><a href="#projects" class="nav-mobile-link">Projects</a></li>
+                <li><a href="#contact" class="nav-mobile-link">Contact</a></li>
+            </ul>
+        </nav>
+    </header>
 
-                <img src="./assets/github.png" 
-                alt="My GitHub Profile" 
-                class="icon" 
-                onclick="location.href='https://github.com/aaronaminubandado'"
-                target="_blank"
-                />
+    <main>
+        <!-- Hero Section -->
+        <section id="hero" class="hero" aria-labelledby="hero-title">
+            <div class="hero-content">
+                <p class="hero-greeting">Hello, I'm</p>
+                <h1 id="hero-title" class="hero-name">Aaron Bandado</h1>
+                <p class="hero-title">Software Engineer</p>
+                <p class="hero-description">
+                    Building elegant solutions with modern technologies. 
+                    Passionate about creating impactful software and continuously learning.
+                </p>
+                <div class="hero-actions">
+                    <a href="./assets/Aaron Aminu Bandado Resume.pdf" class="btn btn-primary" target="_blank" rel="noopener noreferrer">
+                        <svg class="btn-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
+                            <path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4M7 10l5 5 5-5M12 15V3"></path>
+                        </svg>
+                        Download Resume
+                    </a>
+                    <a href="#contact" class="btn btn-secondary">Get in Touch</a>
+                </div>
+                <div class="social-links">
+                    <a href="https://www.linkedin.com/in/aaron-bandado-13749a202/" 
+                       class="social-link" 
+                       target="_blank" 
+                       rel="noopener noreferrer"
+                       aria-label="LinkedIn profile">
+                        <svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+                            <path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433c-1.144 0-2.063-.926-2.063-2.065 0-1.138.92-2.063 2.063-2.063 1.14 0 2.064.925 2.064 2.063 0 1.139-.925 2.065-2.064 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/>
+                        </svg>
+                    </a>
+                    <a href="https://github.com/aaronaminubandado" 
+                       class="social-link" 
+                       target="_blank" 
+                       rel="noopener noreferrer"
+                       aria-label="GitHub profile">
+                        <svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+                            <path d="M12 0C5.37 0 0 5.37 0 12c0 5.31 3.435 9.795 8.205 11.385.6.105.825-.255.825-.57 0-.285-.015-1.23-.015-2.235-3.015.555-3.795-.735-4.035-1.41-.135-.345-.72-1.41-1.23-1.695-.42-.225-1.02-.78-.015-.795.945-.015 1.62.87 1.845 1.23 1.08 1.815 2.805 1.305 3.495.99.105-.78.42-1.305.765-1.605-2.67-.3-5.46-1.335-5.46-5.925 0-1.305.465-2.385 1.23-3.225-.12-.3-.54-1.53.12-3.18 0 0 1.005-.315 3.3 1.23.96-.27 1.98-.405 3-.405s2.04.135 3 .405c2.295-1.56 3.3-1.23 3.3-1.23.66 1.65.24 2.88.12 3.18.765.84 1.23 1.905 1.23 3.225 0 4.605-2.805 5.625-5.475 5.925.435.375.81 1.095.81 2.22 0 1.605-.015 2.895-.015 3.3 0 .315.225.69.825.57A12.02 12.02 0 0024 12c0-6.63-5.37-12-12-12z"/>
+                        </svg>
+                    </a>
+                    <a href="mailto:aaron.aminu1@gmail.com" 
+                       class="social-link" 
+                       aria-label="Send email">
+                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
+                            <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"></path>
+                            <polyline points="22,6 12,13 2,6"></polyline>
+                        </svg>
+                    </a>
+                </div>
             </div>
+        </section>
 
-        </div>
-        <img 
-        src="./assets/arrow.png" 
-        alt="Arrow Icon" 
-        class="icon arrow"
-        onclick="location.href='./#about'"
-        />
-    </section>
-
-    <section id="about">
-        <p class="section-text-p1">Get To Know More</p>
-        <h1 class="title">About Me</h1>
-
-        <div class="section-container">
-            <div class="profile-pic-container">
-                <img 
-                src="./assets/about-pic.jpg" 
-                alt="About picture" 
-                class="about-pic"
-                />
+        <!-- About Section -->
+        <section id="about" aria-labelledby="about-title">
+            <div class="section-header">
+                <p class="section-label">About Me</p>
+                <h2 id="about-title" class="section-title">Get to Know Me</h2>
+                <p class="section-description">
+                    I'm a software engineer with a passion for building modern, user-friendly applications.
+                </p>
             </div>
-            <div class="about-details-container">
-                <div class="about-containers">
-                    <div class="details-container">
-                        <img 
-                        src="./assets/experience.png" 
-                        alt="Experience Icon"
-                        class="icon"
-                        />
-                        <h3>Experience</h3>
-                        <p>2 years <br/> Software Developer</p>           
-                    </div>
-
-                    <div class="details-container">
-                        <img 
-                        src="./assets/education.png" 
-                        alt="Education Icon"
-                        class="icon"
-                        />
-                        <h3>Education</h3>
-                        <p>B.Sc. Computer Engineering(in progress)<br/></p>
+            <div class="about-grid">
+                <div class="about-image-wrapper">
+                    <img src="./assets/about-pic.jpg" 
+                         alt="Aaron Bandado" 
+                         class="about-image"
+                         loading="lazy">
+                    <div class="about-stats">
+                        <div class="stat-item">
+                            <p class="stat-number">2+</p>
+                            <p class="stat-label">Years Experience</p>
+                        </div>
+                        <div class="stat-item">
+                            <p class="stat-number">10+</p>
+                            <p class="stat-label">Projects</p>
+                        </div>
                     </div>
                 </div>
-
-                <div class="text-container">
+                <div class="about-content">
+                    <h3>Who I Am</h3>
                     <p>
-                        Welcome to my portfolio! 
-                        I'm Aaron, and I believe that my strong foundation in programming, 
-                        passion for technology, and eagerness to learn set me apart. 
-                        Through various assignments and coursework, 
-                        I've developed my problem-solving, debugging, and coding skills. 
+                        I'm Aaron, a software engineer based in Nigeria/Cyprus. I have a strong foundation 
+                        in programming and a passion for technology. Through various assignments and 
+                        coursework, I've developed problem-solving, debugging, and coding skills.
+                    </p>
+                    <p>
                         I pick up new technologies quickly and thrive in cooperative team settings. 
-                        My dedication to continuous improvement means I am constantly evolving and enhancing my skills. 
-                        I am excited to bring fresh perspectives and commitment to your development team.
+                        My dedication to continuous improvement means I am constantly evolving and 
+                        enhancing my skills. I am excited to bring fresh perspectives and commitment 
+                        to your development team.
                     </p>
                 </div>
-
             </div>
-        </div>
+        </section>
 
-        <img 
-        src="./assets/arrow.png" 
-        alt="Arrow Icon" 
-        class="icon arrow"
-        onclick="location.href='./#skills'"
-        />
-
-    </section>
-
-    <section id="skills">
-        <p class="section-text-p1">Explore My</p>
-        <h1 class="title">Skills</h1>
-        <div class="skills-details-container">
-            <div class="about-containers">
-                <div class="details-container">
-                    <h2 class="skills-sub-title">Frontend Development</h2>
-                    <div class="article-container">
-                        <article>
-                            <img 
-                            src="./assets/checkmark.png" 
-                            alt="Experience Icon" 
-                            class="icon"
-                            />
-
-                            <div>
-                                <h3>React / Next.js</h3>
-                            </div>
-                        </article>
-                        <article>
-                            <img 
-                            src="./assets/checkmark.png" 
-                            alt="Experience Icon" 
-                            class="icon"
-                            />
-
-                            <div>
-                                <h3>TypeScript / JavaScript</h3>
-                            </div>
-                        </article>
-                        <article>
-                            <img 
-                            src="./assets/checkmark.png" 
-                            alt="Experience Icon" 
-                            class="icon"
-                            />
-
-                            <div>
-                                <h3>Tailwind / Sass / CSS</h3>
-                            </div>
-                        </article>
-                        <article>
-                            <img 
-                            src="./assets/checkmark.png" 
-                            alt="Experience Icon" 
-                            class="icon"
-                            />
-
-                            <div>
-                                <h3>UI/UX & Responsive</h3>
-                            </div>
-                        </article>
-                        <article>
-                            <img 
-                            src="./assets/checkmark.png" 
-                            alt="Experience Icon" 
-                            class="icon"
-                            />
-
-                            <div>
-                                <h3>Performance & Accessibility</h3>
-                            </div>
-                        </article>
-                    </div>
+        <!-- Skills Section -->
+        <section id="skills" aria-labelledby="skills-title">
+            <div class="section-header">
+                <p class="section-label">Skills</p>
+                <h2 id="skills-title" class="section-title">My Technical Skills</h2>
+                <p class="section-description">
+                    I've worked with a variety of technologies throughout my career.
+                </p>
+            </div>
+            <div class="skills-grid">
+                <div class="skill-category">
+                    <h4>Frontend Development</h4>
+                    <ul class="skill-list">
+                        <li class="skill-tag">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="20 6 9 17 4 12"></polyline></svg>
+                            React / Next.js
+                        </li>
+                        <li class="skill-tag">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="20 6 9 17 4 12"></polyline></svg>
+                            TypeScript / JavaScript
+                        </li>
+                        <li class="skill-tag">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="20 6 9 17 4 12"></polyline></svg>
+                            Tailwind / Sass / CSS
+                        </li>
+                        <li class="skill-tag">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="20 6 9 17 4 12"></polyline></svg>
+                            HTML5 / Semantic HTML
+                        </li>
+                    </ul>
                 </div>
-                <div class="details-container">
-                    <h2 class="skills-sub-title">Backend & Platforms</h2>
-                    <div class="article-container">
-                        <article>
-                            <img 
-                            src="./assets/checkmark.png" 
-                            alt="Experience Icon" 
-                            class="icon"
-                            />
-
-                            <div>
-                                <h3>Node.js</h3>
-                            </div>
-                        </article>
-                        <article>
-                            <img 
-                            src="./assets/checkmark.png" 
-                            alt="Experience Icon" 
-                            class="icon"
-                            />
-
-                            <div>
-                                <h3>Firebase / Supabase</h3>
-                            </div>
-                        </article>
-                        <article>
-                            <img 
-                            src="./assets/checkmark.png" 
-                            alt="Experience Icon" 
-                            class="icon"
-                            />
-
-                            <div>
-                                <h3>SQL / MySQL</h3>
-                            </div>
-                        </article>
-                         <article>
-                            <img 
-                            src="./assets/checkmark.png" 
-                            alt="Experience Icon" 
-                            class="icon"
-                            />
-
-                            <div>
-                                <h3>CI/CD (GitHub Actions)</h3>
-                            </div>
-                        </article>
-                        <article>
-                            <img 
-                            src="./assets/checkmark.png" 
-                            alt="Experience Icon" 
-                            class="icon"
-                            />
-
-                            <div>
-                                <h3>Linux / Nginx / Apache / PM2</h3>
-                            </div>
-                        </article>
-
-                        <article>
-                            <img 
-                            src="./assets/checkmark.png" 
-                            alt="Experience Icon" 
-                            class="icon"
-                            />
-
-                            <div>
-                                <h3>Python</h3>
-                            </div>
-                        </article>
-
-                        <article>
-                            <img 
-                            src="./assets/checkmark.png" 
-                            alt="Experience Icon" 
-                            class="icon"
-                            />
-
-                            <div>
-                                <h3>PHP / Laravel</h3>
-                            </div>
-                        </article>
-                        
-                    </div>
-                </div> 
-                
-            </div>            
-            
-        </div>
-        <img 
-        src="./assets/arrow.png" 
-        alt="Arrow Icon" 
-        class="icon arrow"
-        onclick="location.href='./#projects'"
-        />
-    </section>
-
-    <section id="projects">
-        <p class="section-text-p1">Browse My Recent</p>
-        <h1 class="title">Projects</h1>
-        <div class="skills-details-container">
-            <div class="about-containers" id="projects-container">
+                <div class="skill-category">
+                    <h4>Backend & Databases</h4>
+                    <ul class="skill-list">
+                        <li class="skill-tag">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="20 6 9 17 4 12"></polyline></svg>
+                            Node.js
+                        </li>
+                        <li class="skill-tag">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="20 6 9 17 4 12"></polyline></svg>
+                            Python
+                        </li>
+                        <li class="skill-tag">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="20 6 9 17 4 12"></polyline></svg>
+                            PHP / Laravel
+                        </li>
+                        <li class="skill-tag">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="20 6 9 17 4 12"></polyline></svg>
+                            PostgreSQL / MySQL
+                        </li>
+                        <li class="skill-tag">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="20 6 9 17 4 12"></polyline></svg>
+                            Firebase / Supabase
+                        </li>
+                    </ul>
+                </div>
+                <div class="skill-category">
+                    <h4>Tools & Platforms</h4>
+                    <ul class="skill-list">
+                        <li class="skill-tag">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="20 6 9 17 4 12"></polyline></svg>
+                            Git / GitHub
+                        </li>
+                        <li class="skill-tag">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="20 6 9 17 4 12"></polyline></svg>
+                            CI/CD (GitHub Actions)
+                        </li>
+                        <li class="skill-tag">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="20 6 9 17 4 12"></polyline></svg>
+                            Linux / Nginx
+                        </li>
+                        <li class="skill-tag">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="20 6 9 17 4 12"></polyline></svg>
+                            Vercel / Netlify
+                        </li>
+                    </ul>
+                </div>
             </div>
-        </div>
-        <button class="btn btn-color-2 show-more-btn" onclick="location.href='https://github.com/aaronaminubandado'">
-            View more Projects on GitHub
-        </button>
-        <img 
-        src="./assets/arrow.png" 
-        alt="Arrow Icon" 
-        class="icon arrow"
-        onclick="location.href='./#contact'"
-        />
-    </section>
+        </section>
+
+        <!-- Projects Section -->
+        <section id="projects" aria-labelledby="projects-title">
+            <div class="section-header">
+                <p class="section-label">Projects</p>
+                <h2 id="projects-title" class="section-title">Featured Work</h2>
+                <p class="section-description">
+                    Here are some of the projects I've worked on. Click to view details.
+                </p>
+            </div>
+            <div id="projects-grid" class="projects-grid" role="list">
+                <!-- Projects will be rendered dynamically from data/projects.json -->
+            </div>
+        </section>
+
+        <!-- Contact Section -->
+        <section id="contact" aria-labelledby="contact-title">
+            <div class="section-header">
+                <p class="section-label">Contact</p>
+                <h2 id="contact-title" class="section-title">Get In Touch</h2>
+                <p class="section-description">
+                    Have a question or want to work together? Feel free to reach out.
+                </p>
+            </div>
+            <div class="contact-grid">
+                <a href="mailto:aaron.aminu1@gmail.com" class="contact-card">
+                    <div class="contact-icon">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
+                            <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"></path>
+                            <polyline points="22,6 12,13 2,6"></polyline>
+                        </svg>
+                    </div>
+                    <div class="contact-info">
+                        <h4>Email</h4>
+                        <p>aaron.aminu1@gmail.com</p>
+                    </div>
+                </a>
+                <a href="tel:+2347087122029" class="contact-card">
+                    <div class="contact-icon">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
+                            <path d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07 19.5 19.5 0 01-6-6 19.79 19.79 0 01-3.07-8.67A2 2 0 014.11 2h3a2 2 0 012 1.72 12.84 12.84 0 00.7 2.81 2 2 0 01-.45 2.11L8.09 9.91a16 16 0 006 6l1.27-1.27a2 2 0 012.11-.45 12.84 12.84 0 002.81.7A2 2 0 0122 16.92z"></path>
+                        </svg>
+                    </div>
+                    <div class="contact-info">
+                        <h4>Phone</h4>
+                        <p>+234 708 712 2029</p>
+                    </div>
+                </a>
+                <a href="https://www.linkedin.com/in/aaron-bandado-13749a202/" 
+                   class="contact-card" 
+                   target="_blank" 
+                   rel="noopener noreferrer">
+                    <div class="contact-icon">
+                        <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+                            <path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433c-1.144 0-2.063-.926-2.063-2.065 0-1.138.92-2.063 2.063-2.063 1.14 0 2.064.925 2.064 2.063 0 1.139-.925 2.065-2.064 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/>
+                        </svg>
+                    </div>
+                    <div class="contact-info">
+                        <h4>LinkedIn</h4>
+                        <p>Connect with me</p>
+                    </div>
+                </a>
+                <a href="https://github.com/aaronaminubandado" 
+                   class="contact-card" 
+                   target="_blank" 
+                   rel="noopener noreferrer">
+                    <div class="contact-icon">
+                        <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+                            <path d="M12 0C5.37 0 0 5.37 0 12c0 5.31 3.435 9.795 8.205 11.385.6.105.825-.255.825-.57 0-.285-.015-1.23-.015-2.235-3.015.555-3.795-.735-4.035-1.41-.135-.345-.72-1.41-1.23-1.695-.42-.225-1.02-.78-.015-.795.945-.015 1.62.87 1.845 1.23 1.08 1.815 2.805 1.305 3.495.99.105-.78.42-1.305.765-1.605-2.67-.3-5.46-1.335-5.46-5.925 0-1.305.465-2.385 1.23-3.225-.12-.3-.54-1.53.12-3.18 0 0 1.005-.315 3.3 1.23.96-.27 1.98-.405 3-.405s2.04.135 3 .405c2.295-1.56 3.3-1.23 3.3-1.23.66 1.65.24 2.88.12 3.18.765.84 1.23 1.905 1.23 3.225 0 4.605-2.805 5.625-5.475 5.925.435.375.81 1.095.81 2.22 0 1.605-.015 2.895-.015 3.3 0 .315.225.69.825.57A12.02 12.02 0 0024 12c0-6.63-5.37-12-12-12z"/>
+                        </svg>
+                    </div>
+                    <div class="contact-info">
+                        <h4>GitHub</h4>
+                        <p>View my repositories</p>
+                    </div>
+                </a>
+            </div>
+        </section>
+    </main>
+
+    <!-- Footer -->
+    <footer class="footer" role="contentinfo">
+        <p>&copy; 2025 Aaron Bandado. All rights reserved.</p>
+    </footer>
 
     <!-- Project Modal -->
-    <div id="project-modal" class="modal">
-        <span class="modal-close" onclick="closeModal()">&times;</span>
-        <div class="modal-content">
-            <div class="modal-carousel">
-                <button class="carousel-btn prev-btn" onclick="changeSlide(-1)">&#10094;</button>
-                <div class="carousel-track" id="modal-carousel-track">
-                </div>
-                <button class="carousel-btn next-btn" onclick="changeSlide(1)">&#10095;</button>
+    <div id="modal-overlay" class="modal-overlay" aria-hidden="true" role="dialog" aria-modal="true" aria-labelledby="modal-title">
+        <span id="focus-trap-start" class="modal-focus-trap" tabindex="0"></span>
+        
+        <div class="modal">
+            <button id="modal-close" class="modal-close" aria-label="Close modal">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
+                    <line x1="18" y1="6" x2="6" y2="18"></line>
+                    <line x1="6" y1="6" x2="18" y2="18"></line>
+                </svg>
+            </button>
+
+            <div class="modal-carousel" role="region" aria-label="Project images">
+                <div id="carousel-track" class="carousel-track"></div>
+                
+                <button id="carousel-prev" class="carousel-btn prev" aria-label="Previous image">
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
+                        <polyline points="15 18 9 12 15 6"></polyline>
+                    </svg>
+                </button>
+                
+                <button id="carousel-next" class="carousel-btn next" aria-label="Next image">
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
+                        <polyline points="9 18 15 12 9 6"></polyline>
+                    </svg>
+                </button>
+                
+                <div id="carousel-indicators" class="carousel-indicators" role="tablist" aria-label="Image navigation"></div>
             </div>
+
             <div class="modal-info">
                 <h2 id="modal-title" class="modal-title"></h2>
                 <p id="modal-description" class="modal-description"></p>
                 <div id="modal-tech" class="modal-tech"></div>
-                <div class="modal-links">
-                    <a id="modal-repo" class="btn btn-color-2" href="#" target="_blank">
-                        <i class="fab fa-github"></i> GitHub
+                <div class="modal-actions">
+                    <a id="modal-repo" href="#" class="btn btn-secondary" target="_blank" rel="noopener noreferrer">
+                        <svg class="btn-icon" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+                            <path d="M12 0C5.37 0 0 5.37 0 12c0 5.31 3.435 9.795 8.205 11.385.6.105.825-.255.825-.57 0-.285-.015-1.23-.015-2.235-3.015.555-3.795-.735-4.035-1.41-.135-.345-.72-1.41-1.23-1.695-.42-.225-1.02-.78-.015-.795.945-.015 1.62.87 1.845 1.23 1.08 1.815 2.805 1.305 3.495.99.105-.78.42-1.305.765-1.605-2.67-.3-5.46-1.335-5.46-5.925 0-1.305.465-2.385 1.23-3.225-.12-.3-.54-1.53.12-3.18 0 0 1.005-.315 3.3 1.23.96-.27 1.98-.405 3-.405s2.04.135 3 .405c2.295-1.56 3.3-1.23 3.3-1.23.66 1.65.24 2.88.12 3.18.765.84 1.23 1.905 1.23 3.225 0 4.605-2.805 5.625-5.475 5.925.435.375.81 1.095.81 2.22 0 1.605-.015 2.895-.015 3.3 0 .315.225.69.825.57A12.02 12.02 0 0024 12c0-6.63-5.37-12-12-12z"/>
+                        </svg>
+                        View Code
                     </a>
-                    <a id="modal-live" class="btn btn-color-2" href="#" target="_blank">
-                        <i class="fas fa-external-link-alt"></i> Live Demo
+                    <a id="modal-live" href="#" class="btn btn-primary" target="_blank" rel="noopener noreferrer">
+                        <svg class="btn-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
+                            <path d="M18 13v6a2 2 0 01-2 2H5a2 2 0 01-2-2V8a2 2 0 012-2h6M15 3h6v6M10 14L21 3"></path>
+                        </svg>
+                        Live Demo
                     </a>
                 </div>
             </div>
         </div>
+
+        <span id="focus-trap-end" class="modal-focus-trap" tabindex="0"></span>
     </div>
 
-    <section id="contact">
-        <p class="section-text-p1">Reach out...</p>
-        <h1 class="title">Contact Me</h1>
-        <div class="contact-info-upper-container">
-            <div class="contact-info-container">
-                <img 
-                src="./assets/email.png" 
-                alt="Email icon"
-                class="icon contact-icon email-icon"
-                />
-                <p><a href="mailto:aaron.aminu1@gmail.com">aaron.aminu1@gmail.com</a></p>
-            </div>
-            <div class="contact-info-container">
-                <i class="fa-solid fa-phone icon contact-icon" aria-hidden="true" style="font-size: 1.5rem;"></i>
-                <p><a href="tel:+2347087122029">+234 708 712 2029</a> · Abuja, Nigeria / Cyprus</p>
-            </div>
-            <div class="contact-info-container">
-                <img 
-                src="./assets/linkedin.png" 
-                alt="LinkedIn icon"
-                class="icon contact-icon"
-                />
-                <p><a href="https://www.linkedin.com/in/aaron-bandado-13749a202/">LinkedIn</a></p>
-            </div>
-        </div>
-    </section>
-
-    <footer>
-        <nav>
-            <div class="nav-links-container">
-                <ul class="nav-links">
-                    <li><a href="">Home</a></li>
-                    <li><a href="#about">About</a></li>
-                    <li><a href="#skills">Skills</a></li>
-                    <li><a href="#projects">Projects</a></li>
-                    <li><a href="#contact">Contacts</a></li>
-                </ul>
-            </div>
-        </nav>
-        <p>Copyright &#169 2025 Aaron Bandado. All Rights Reserved</p>
-    </footer>
-
-    <script src="script.js"></script>
+    <script src="./scripts/main.js" defer></script>
 </body>
 </html>
