@@ -1,0 +1,38 @@
+[
+  {
+    "id": "jias-gadgets",
+    "title": "Jia's Gadgets",
+    "shortDescription": "E-commerce platform for gadgets with cart and checkout functionality.",
+    "longDescription": "A full-featured e-commerce website for a gadget store with product browsing, shopping cart, and checkout functionality. Built with modern web technologies for a smooth user experience.",
+    "tech": ["React", "Node.js", "MongoDB"],
+    "repoUrl": "https://github.com/aaronaminubandado/jias-gadgets.git",
+    "liveUrl": "https://jiasgadgets.netlify.app/",
+    "images": [
+      "./assets/jiasgadgets.png"
+    ]
+  },
+  {
+    "id": "billa",
+    "title": "Billa",
+    "shortDescription": "E-commerce platform for shoes with modern UI and fast performance.",
+    "longDescription": "A modern e-commerce application for a shoe brand featuring product catalog, search functionality, and responsive design optimized for all devices.",
+    "tech": ["Next.js", "Tailwind CSS", "PostgreSQL"],
+    "repoUrl": "https://github.com/aaronaminubandado/billa",
+    "liveUrl": "https://billa-beige.vercel.app",
+    "images": [
+      "./assets/billa.png"
+    ]
+  },
+  {
+    "id": "ezclean",
+    "title": "EzClean",
+    "shortDescription": "Cleaning service booking application with appointment scheduling.",
+    "longDescription": "A service booking application that allows customers to schedule cleaning services. Features include appointment management, service selection, and booking confirmation.",
+    "tech": ["React", "Firebase", "CSS"],
+    "repoUrl": "https://github.com/aaronaminubandado/ez-clean-app.git",
+    "liveUrl": "",
+    "images": [
+      "./assets/EzClean.png"
+    ]
+  }
+]
