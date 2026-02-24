@@ -321,60 +321,8 @@
         <p class="section-text-p1">Browse My Recent</p>
         <h1 class="title">Projects</h1>
         <div class="skills-details-container">
-            <div class="about-containers">
-            <div class="details-container color-container">
-                <div class="article-container">
-                    <img 
-                    src="./assets/jiasgadgets.png" 
-                    alt="Project image"
-                    class="project-img"
-                    />
-                </div>
-                <h2 class="experience-sub-title project-title">Jia’s Gadgets</h2>
-                <div class="btn-container">
-                    <button class="btn btn-color-2 project-btn" onclick="location.href='https://github.com/aaronaminubandado/jias-gadgets.git'">
-                        GitHub
-                    </button>
-                   <button class="btn btn-color-2 project-btn" onclick="location.href='https://jiasgadgets.netlify.app/'">
-                        Live Demo
-                    </button>
-                </div>
+            <div class="about-containers" id="projects-container">
             </div>
-            <div class="details-container color-container">
-                <div class="article-container">
-                    <img 
-                    src="./assets/billa.png" 
-                    alt="Project image"
-                    class="project-img"
-                    />
-                </div>
-                <h2 class="experience-sub-title project-title">Billa</h2>
-                <div class="btn-container">
-                    <button class="btn btn-color-2 project-btn" onclick="location.href='https://github.com/aaronaminubandado/billa'">
-                        GitHub
-                    </button>
-                    <button class="btn btn-color-2 project-btn" onclick="location.href='https://billa-beige.vercel.app'">
-                        Live Demo
-                    </button>
-                </div>
-            </div>
-            <div class="details-container color-container">
-                <div class="article-container">
-                    <img 
-                    src="./assets/EzClean.png" 
-                    alt="Project Image"
-                    class="project-img"
-                    />
-                </div>
-                <h2 class="experience-sub-title project-title">EzClean </h2>
-                <div class="btn-container">
-                    <button class="btn btn-color-2 project-btn" onclick="location.href='https://github.com/aaronaminubandado/ez-clean-app.git'">
-                        GitHub
-                    </button>
-                    
-                </div>
-            </div>
-        </div>
         </div>
         <button class="btn btn-color-2 show-more-btn" onclick="location.href='https://github.com/aaronaminubandado'">
             View more Projects on GitHub
@@ -386,6 +334,32 @@
         onclick="location.href='./#contact'"
         />
     </section>
+
+    <!-- Project Modal -->
+    <div id="project-modal" class="modal">
+        <span class="modal-close" onclick="closeModal()">&times;</span>
+        <div class="modal-content">
+            <div class="modal-carousel">
+                <button class="carousel-btn prev-btn" onclick="changeSlide(-1)">&#10094;</button>
+                <div class="carousel-track" id="modal-carousel-track">
+                </div>
+                <button class="carousel-btn next-btn" onclick="changeSlide(1)">&#10095;</button>
+            </div>
+            <div class="modal-info">
+                <h2 id="modal-title" class="modal-title"></h2>
+                <p id="modal-description" class="modal-description"></p>
+                <div id="modal-tech" class="modal-tech"></div>
+                <div class="modal-links">
+                    <a id="modal-repo" class="btn btn-color-2" href="#" target="_blank">
+                        <i class="fab fa-github"></i> GitHub
+                    </a>
+                    <a id="modal-live" class="btn btn-color-2" href="#" target="_blank">
+                        <i class="fas fa-external-link-alt"></i> Live Demo
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
 
     <section id="contact">
         <p class="section-text-p1">Reach out...</p>
