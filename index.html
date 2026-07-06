@@ -1,370 +1,411 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" data-theme="light">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="Aaron Bandado - Software Engineer Portfolio">
-    <title>Aaron Bandado | Software Engineer</title>
-    
-    <link rel="stylesheet" href="./styles/main.css">
-    
+
+    <title>Aaron Aminu Bandado</title>
+    <meta name="description" content="Aaron Bandado is a Computer Engineering student and full-stack developer in Cyprus who builds and deploys end-to-end web applications with Next.js, Node.js, Python, and Postgres.">
+    <meta name="author" content="Aaron Bandado">
+    <link rel="canonical" href="https://aaronaminubandado.github.io/">
+
+    <!-- Open Graph / social -->
+    <meta property="og:type" content="website">
+    <meta property="og:title" content="Aaron Bandado, Full-stack Developer">
+    <meta property="og:description" content="Computer Engineering student and full-stack developer. I build and deploy end-to-end web applications.">
+    <meta property="og:url" content="https://aaronaminubandado.github.io/">
+    <meta name="twitter:card" content="summary">
+
+    <meta name="theme-color" content="#fcfcfa" media="(prefers-color-scheme: light)">
+    <meta name="theme-color" content="#0c0d10" media="(prefers-color-scheme: dark)">
+    <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='7' fill='%232f43e0'/%3E%3Ctext x='16' y='23' font-family='monospace' font-size='20' font-weight='700' fill='white' text-anchor='middle'%3EA%3C/text%3E%3C/svg%3E">
+
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link rel="stylesheet" href="./styles/main.css">
+
+    <!-- Set theme before paint to avoid a flash of the wrong theme -->
+    <script>
+        (function () {
+            try {
+                var saved = localStorage.getItem('theme');
+                var prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+                if (saved === 'dark' || (!saved && prefersDark)) {
+                    document.documentElement.setAttribute('data-theme', 'dark');
+                }
+            } catch (e) {}
+        })();
+    </script>
+
+    <script type="application/ld+json">
+    {
+        "@context": "https://schema.org",
+        "@type": "Person",
+        "name": "Aaron Bandado",
+        "alternateName": "Aaron A. Bandado",
+        "jobTitle": "Full-stack Developer",
+        "email": "mailto:aaron.aminu1@gmail.com",
+        "url": "https://aaronaminubandado.github.io/",
+        "address": { "@type": "PostalAddress", "addressRegion": "Cyprus" },
+        "nationality": "Nigerian",
+        "alumniOf": "Bahçeşehir Cyprus University",
+        "sameAs": [
+            "https://github.com/aaronaminubandado",
+            "https://www.linkedin.com/in/aaron-bandado-13749a202/"
+        ]
+    }
+    </script>
 </head>
 <body>
+    <a href="#work" class="skip-link">Skip to content</a>
+
     <!-- Navigation -->
     <header class="nav" role="banner">
-        <nav class="nav-container" aria-label="Main navigation">
-            <a href="#" class="nav-logo">Aaron Bandado</a>
-            
-            <ul class="nav-links">
-                <li><a href="#about" class="nav-link">About</a></li>
-                <li><a href="#skills" class="nav-link">Skills</a></li>
-                <li><a href="#projects" class="nav-link">Projects</a></li>
-                <li><a href="#contact" class="nav-link">Contact</a></li>
-            </ul>
+        <div class="nav-container">
+            <a href="#top" class="nav-logo" aria-label="Aaron Bandado home"><span>./</span>aaron-bandado</a>
+
+            <nav class="nav-links" aria-label="Primary">
+                <a href="#work" class="nav-link">Work</a>
+                <a href="#experience" class="nav-link">Experience</a>
+                <a href="#skills" class="nav-link">Skills</a>
+                <a href="#about" class="nav-link">About</a>
+                <a href="#contact" class="nav-link">Contact</a>
+            </nav>
 
             <div class="nav-actions">
-                <button id="theme-toggle" class="theme-toggle" aria-label="Toggle dark mode">
-                    <svg class="sun-icon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
+                <button id="theme-toggle" class="icon-btn theme-toggle" type="button" aria-label="Switch color theme">
+                    <svg class="sun-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true">
                         <circle cx="12" cy="12" r="5"></circle>
                         <path d="M12 1v2M12 21v2M4.22 4.22l1.42 1.42M18.36 18.36l1.42 1.42M1 12h2M21 12h2M4.22 19.78l1.42-1.42M18.36 5.64l1.42-1.42"></path>
                     </svg>
-                    <svg class="moon-icon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true" style="display: none;">
+                    <svg class="moon-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true">
                         <path d="M21 12.79A9 9 0 1111.21 3 7 7 0 0021 12.79z"></path>
                     </svg>
                 </button>
 
-                <button id="hamburger" class="nav-hamburger" aria-label="Toggle mobile menu" aria-expanded="false" aria-controls="mobile-nav">
-                    <span></span>
-                    <span></span>
-                    <span></span>
+                <button id="hamburger" class="nav-hamburger" type="button" aria-label="Toggle menu" aria-expanded="false" aria-controls="mobile-nav">
+                    <span></span><span></span><span></span>
                 </button>
             </div>
-        </nav>
+        </div>
 
-        <nav id="mobile-nav" class="nav-mobile" hidden aria-label="Mobile navigation">
+        <nav id="mobile-nav" class="nav-mobile" hidden aria-label="Mobile">
             <ul class="nav-mobile-links">
-                <li><a href="#about" class="nav-mobile-link">About</a></li>
+                <li><a href="#work" class="nav-mobile-link">Work</a></li>
+                <li><a href="#experience" class="nav-mobile-link">Experience</a></li>
                 <li><a href="#skills" class="nav-mobile-link">Skills</a></li>
-                <li><a href="#projects" class="nav-mobile-link">Projects</a></li>
+                <li><a href="#about" class="nav-mobile-link">About</a></li>
                 <li><a href="#contact" class="nav-mobile-link">Contact</a></li>
             </ul>
         </nav>
     </header>
 
-    <main>
-        <!-- Hero Section -->
-        <section id="hero" class="hero" aria-labelledby="hero-title">
-            <div class="hero-content">
-                <p class="hero-greeting">Hello, I'm</p>
-                <h1 id="hero-title" class="hero-name">Aaron Bandado</h1>
-                <p class="hero-title">Software Engineer</p>
-                <p class="hero-description">
-                    Building elegant solutions with modern technologies. 
-                    Passionate about creating impactful software and continuously learning.
-                </p>
-                <div class="hero-actions">
-                    <a href="./assets/Aaron Aminu Bandado Resume.pdf" class="btn btn-primary" target="_blank" rel="noopener noreferrer">
-                        <svg class="btn-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
-                            <path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4M7 10l5 5 5-5M12 15V3"></path>
-                        </svg>
-                        Download Resume
-                    </a>
-                    <a href="#contact" class="btn btn-secondary">Get in Touch</a>
-                </div>
-                <div class="social-links">
-                    <a href="https://www.linkedin.com/in/aaron-bandado-13749a202/" 
-                       class="social-link" 
-                       target="_blank" 
-                       rel="noopener noreferrer"
-                       aria-label="LinkedIn profile">
-                        <svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
-                            <path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433c-1.144 0-2.063-.926-2.063-2.065 0-1.138.92-2.063 2.063-2.063 1.14 0 2.064.925 2.064 2.063 0 1.139-.925 2.065-2.064 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/>
-                        </svg>
-                    </a>
-                    <a href="https://github.com/aaronaminubandado" 
-                       class="social-link" 
-                       target="_blank" 
-                       rel="noopener noreferrer"
-                       aria-label="GitHub profile">
-                        <svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
-                            <path d="M12 0C5.37 0 0 5.37 0 12c0 5.31 3.435 9.795 8.205 11.385.6.105.825-.255.825-.57 0-.285-.015-1.23-.015-2.235-3.015.555-3.795-.735-4.035-1.41-.135-.345-.72-1.41-1.23-1.695-.42-.225-1.02-.78-.015-.795.945-.015 1.62.87 1.845 1.23 1.08 1.815 2.805 1.305 3.495.99.105-.78.42-1.305.765-1.605-2.67-.3-5.46-1.335-5.46-5.925 0-1.305.465-2.385 1.23-3.225-.12-.3-.54-1.53.12-3.18 0 0 1.005-.315 3.3 1.23.96-.27 1.98-.405 3-.405s2.04.135 3 .405c2.295-1.56 3.3-1.23 3.3-1.23.66 1.65.24 2.88.12 3.18.765.84 1.23 1.905 1.23 3.225 0 4.605-2.805 5.625-5.475 5.925.435.375.81 1.095.81 2.22 0 1.605-.015 2.895-.015 3.3 0 .315.225.69.825.57A12.02 12.02 0 0024 12c0-6.63-5.37-12-12-12z"/>
-                        </svg>
-                    </a>
-                    <a href="mailto:aaron.aminu1@gmail.com" 
-                       class="social-link" 
-                       aria-label="Send email">
-                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
-                            <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"></path>
-                            <polyline points="22,6 12,13 2,6"></polyline>
-                        </svg>
-                    </a>
-                </div>
-            </div>
-        </section>
+    <main id="top">
+        <!-- Hero -->
+        <section class="hero container" aria-labelledby="hero-title">
+            <div class="hero-grid">
+                <div class="hero-content">
+                    <p class="mono-label hero-status">Full-stack developer</p>
+                    <h1 id="hero-title" class="hero-title">I build and <span class="accent">deploy</span> end-to-end web applications.</h1>
+                    <p class="hero-lede">
+                        Computer Engineering student and full-stack developer based in Cyprus. I ship
+                        production web apps and analytics systems, from Next.js frontends to Postgres
+                        schemas, CI/CD pipelines, and the Linux servers they run on.
+                    </p>
 
-        <!-- About Section -->
-        <section id="about" aria-labelledby="about-title">
-            <div class="section-header">
-                <p class="section-label">About Me</p>
-                <h2 id="about-title" class="section-title">Get to Know Me</h2>
-                <p class="section-description">
-                    I'm a software engineer with a passion for building modern, user-friendly applications.
-                </p>
-            </div>
-            <div class="about-grid">
-                <div class="about-image-wrapper">
-                    <img src="./assets/about-pic.jpg" 
-                         alt="Aaron Bandado" 
-                         class="about-image"
-                         loading="lazy">
-                    <div class="about-stats">
-                        <div class="stat-item">
-                            <p class="stat-number">2+</p>
-                            <p class="stat-label">Years Experience</p>
-                        </div>
-                        <div class="stat-item">
-                            <p class="stat-number">10+</p>
-                            <p class="stat-label">Projects</p>
-                        </div>
+                    <div class="hero-actions">
+                        <a href="#work" class="btn btn-primary">
+                            View selected work
+                            <svg class="btn-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+                        </a>
+                        <a href="./assets/Aaron Aminu Bandado Resume.pdf" class="btn btn-secondary" target="_blank" rel="noopener noreferrer">
+                            <svg class="btn-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4M7 10l5 5 5-5M12 15V3"/></svg>
+                            Resume
+                        </a>
+                    </div>
+
+                    <dl class="hero-meta">
+                        <div class="hero-meta-item"><dt>Focus</dt><dd>Product &amp; systems engineering</dd></div>
+                        <div class="hero-meta-item"><dt>Based in</dt><dd>Cyprus</dd></div>
+                        <div class="hero-meta-item"><dt>Education</dt><dd>BSc Computer Engineering, ’27</dd></div>
+                    </dl>
+
+                    <div class="social-links">
+                        <a href="https://github.com/aaronaminubandado" class="social-link" target="_blank" rel="noopener noreferrer" aria-label="GitHub">
+                            <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 0C5.37 0 0 5.37 0 12c0 5.31 3.435 9.795 8.205 11.385.6.105.825-.255.825-.57 0-.285-.015-1.23-.015-2.235-3.015.555-3.795-.735-4.035-1.41-.135-.345-.72-1.41-1.23-1.695-.42-.225-1.02-.78-.015-.795.945-.015 1.62.87 1.845 1.23 1.08 1.815 2.805 1.305 3.495.99.105-.78.42-1.305.765-1.605-2.67-.3-5.46-1.335-5.46-5.925 0-1.305.465-2.385 1.23-3.225-.12-.3-.54-1.53.12-3.18 0 0 1.005-.315 3.3 1.23.96-.27 1.98-.405 3-.405s2.04.135 3 .405c2.295-1.56 3.3-1.23 3.3-1.23.66 1.65.24 2.88.12 3.18.765.84 1.23 1.905 1.23 3.225 0 4.605-2.805 5.625-5.475 5.925.435.375.81 1.095.81 2.22 0 1.605-.015 2.895-.015 3.3 0 .315.225.69.825.57A12.02 12.02 0 0024 12c0-6.63-5.37-12-12-12z"/></svg>
+                        </a>
+                        <a href="https://www.linkedin.com/in/aaron-bandado-13749a202/" class="social-link" target="_blank" rel="noopener noreferrer" aria-label="LinkedIn">
+                            <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433c-1.144 0-2.063-.926-2.063-2.065 0-1.138.92-2.063 2.063-2.063 1.14 0 2.064.925 2.064 2.063 0 1.139-.925 2.065-2.064 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/></svg>
+                        </a>
+                        <a href="mailto:aaron.aminu1@gmail.com" class="social-link" aria-label="Email">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
+                        </a>
                     </div>
                 </div>
-                <div class="about-content">
-                    <h3>Who I Am</h3>
-                    <p>
-                        I'm Aaron, a software engineer based in Nigeria/Cyprus. I have a strong foundation 
-                        in programming and a passion for technology. Through various assignments and 
-                        coursework, I've developed problem-solving, debugging, and coding skills.
-                    </p>
-                    <p>
-                        I pick up new technologies quickly and thrive in cooperative team settings. 
-                        My dedication to continuous improvement means I am constantly evolving and 
-                        enhancing my skills. I am excited to bring fresh perspectives and commitment 
-                        to your development team.
-                    </p>
+
+                <div class="hero-photo-wrap">
+                    <img src="./assets/passport.jpeg" alt="Portrait of Aaron Bandado" class="hero-photo" width="380" height="475" loading="eager">
                 </div>
             </div>
         </section>
 
-        <!-- Skills Section -->
-        <section id="skills" aria-labelledby="skills-title">
-            <div class="section-header">
-                <p class="section-label">Skills</p>
-                <h2 id="skills-title" class="section-title">My Technical Skills</h2>
-                <p class="section-description">
-                    I've worked with a variety of technologies throughout my career.
-                </p>
+        <!-- Selected work -->
+        <section id="work" class="section container reveal" aria-labelledby="work-title">
+            <header class="section-head">
+                <span class="section-index">01</span>
+                <h2 id="work-title" class="section-title">Selected work</h2>
+                <p class="section-note">Case studies from projects on my GitHub. Select any project for the full breakdown.</p>
+            </header>
+
+            <div class="work-carousel" role="region" aria-roledescription="carousel" aria-label="Selected projects" tabindex="0">
+                <div class="work-carousel-viewport">
+                    <div id="work-track" class="work-carousel-track">
+                        <!-- Featured projects rendered from data/projects.json -->
+                    </div>
+                </div>
+
+                <div class="work-carousel-footer">
+                    <button id="work-prev" class="work-carousel-btn" type="button" aria-label="Previous project">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><polyline points="15 18 9 12 15 6"/></svg>
+                    </button>
+                    <div id="work-indicators" class="work-carousel-indicators" role="tablist" aria-label="Project navigation"></div>
+                    <button id="work-next" class="work-carousel-btn" type="button" aria-label="Next project">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><polyline points="9 18 15 12 9 6"/></svg>
+                    </button>
+                </div>
             </div>
+
+            <div id="more-work" class="more-work">
+                <!-- Secondary projects rendered from data/projects.json -->
+            </div>
+        </section>
+
+        <!-- Experience -->
+        <section id="experience" class="section container reveal" aria-labelledby="experience-title">
+            <header class="section-head">
+                <span class="section-index">02</span>
+                <h2 id="experience-title" class="section-title">Experience</h2>
+                <p class="section-note">Two internships and a full-stack role across product, DevOps, and low-level engineering.</p>
+            </header>
+
+            <div class="timeline">
+                <article class="role">
+                    <div class="role-meta">
+                        <span class="role-period">Nov 2024 – Oct 2025</span>
+                        <span class="role-location">Lantid Creative · Remote</span>
+                    </div>
+                    <div class="role-detail">
+                        <h3 class="role-title">Fullstack Developer</h3>
+                        <p class="role-company">Product engineering &amp; deployment</p>
+                        <ul class="role-points">
+                            <li>Deployed and maintained 8–12 full-stack applications on Azure, configuring Nginx, Apache, and PM2 for stable production environments.</li>
+                            <li>Built CI/CD pipelines with GitHub Actions and SSH deploys, cutting deployment time and eliminating manual server updates.</li>
+                            <li>Shipped a customer previous-orders feature for a restaurant POS (React + Node.js) used by ~20 active users.</li>
+                            <li>Ran ongoing server operations (SSL, domains, OS updates, backups) and integrated third-party payment credentials, contributing to an escrow-flow design for a multivendor marketplace.</li>
+                        </ul>
+                    </div>
+                </article>
+
+                <article class="role">
+                    <div class="role-meta">
+                        <span class="role-period">Jul 2024 – Sep 2024</span>
+                        <span class="role-location">Cyppass · Remote, Cyprus</span>
+                    </div>
+                    <div class="role-detail">
+                        <h3 class="role-title">Software Engineering Intern</h3>
+                        <p class="role-company">Next.js admin dashboards</p>
+                        <ul class="role-points">
+                            <li>Built Next.js admin pages with Firestore integration for real-time management of virtual bus passes and credit data.</li>
+                            <li>Implemented CRUD operations, security rules, and optimized Firestore queries to improve reliability of data updates.</li>
+                            <li>Designed reusable UI components (tables, forms, inputs) with Tailwind + shadcn, reducing duplication and speeding up page creation.</li>
+                            <li>Migrated parts of the platform from PostgreSQL to Firestore and contributed to the redesign of the main admin panel.</li>
+                        </ul>
+                    </div>
+                </article>
+
+                <article class="role">
+                    <div class="role-meta">
+                        <span class="role-period">Jul 2023 – Sep 2023</span>
+                        <span class="role-location">Comtech Ltd · Lefkoşa, Cyprus</span>
+                    </div>
+                    <div class="role-detail">
+                        <h3 class="role-title">Software Engineering Intern</h3>
+                        <p class="role-company">C++ OCR &amp; document parsing</p>
+                        <ul class="role-points">
+                            <li>Built a C++ OCR invoice/receipt scanner (libtesseract + Leptonica), improving text-extraction accuracy ~10–20% through custom preprocessing.</li>
+                            <li>Cut extraction time from several minutes of manual reading to 10–20 seconds per document.</li>
+                            <li>Developed modular parsing to convert OCR output into structured data: table extraction, VAT/currency detection, and regex-based unit inference.</li>
+                            <li>Documented modules clearly for handoff and integration into an open-banking system.</li>
+                        </ul>
+                    </div>
+                </article>
+            </div>
+        </section>
+
+        <!-- Skills -->
+        <section id="skills" class="section container reveal" aria-labelledby="skills-title">
+            <header class="section-head">
+                <span class="section-index">03</span>
+                <h2 id="skills-title" class="section-title">Skills</h2>
+                <p class="section-note">Languages and tools I reach for, grouped by where they live in the stack.</p>
+            </header>
+
             <div class="skills-grid">
-                <div class="skill-category">
-                    <h4>Frontend Development</h4>
-                    <ul class="skill-list">
-                        <li class="skill-tag">
-                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="20 6 9 17 4 12"></polyline></svg>
-                            React / Next.js
-                        </li>
-                        <li class="skill-tag">
-                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="20 6 9 17 4 12"></polyline></svg>
-                            TypeScript / JavaScript
-                        </li>
-                        <li class="skill-tag">
-                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="20 6 9 17 4 12"></polyline></svg>
-                            Tailwind / Sass / CSS
-                        </li>
-                        <li class="skill-tag">
-                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="20 6 9 17 4 12"></polyline></svg>
-                            HTML5 / Semantic HTML
-                        </li>
+                <div class="skill-group">
+                    <h3>Languages</h3>
+                    <ul class="skill-items">
+                        <li>JavaScript</li><li>TypeScript</li><li>Python</li><li>C / C++</li>
+                        <li>Java</li><li>SQL</li><li>PHP</li><li>HTML</li><li>CSS / Sass</li>
                     </ul>
                 </div>
-                <div class="skill-category">
-                    <h4>Backend & Databases</h4>
-                    <ul class="skill-list">
-                        <li class="skill-tag">
-                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="20 6 9 17 4 12"></polyline></svg>
-                            Node.js
-                        </li>
-                        <li class="skill-tag">
-                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="20 6 9 17 4 12"></polyline></svg>
-                            Python
-                        </li>
-                        <li class="skill-tag">
-                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="20 6 9 17 4 12"></polyline></svg>
-                            PHP / Laravel
-                        </li>
-                        <li class="skill-tag">
-                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="20 6 9 17 4 12"></polyline></svg>
-                            PostgreSQL / MySQL
-                        </li>
-                        <li class="skill-tag">
-                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="20 6 9 17 4 12"></polyline></svg>
-                            Firebase / Supabase
-                        </li>
+                <div class="skill-group">
+                    <h3>Frameworks &amp; Libraries</h3>
+                    <ul class="skill-items">
+                        <li>React</li><li>Next.js</li><li>Node.js</li><li>Flask</li>
+                        <li>Laravel</li><li>Tailwind CSS</li><li>Bootstrap</li>
                     </ul>
                 </div>
-                <div class="skill-category">
-                    <h4>Tools & Platforms</h4>
-                    <ul class="skill-list">
-                        <li class="skill-tag">
-                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="20 6 9 17 4 12"></polyline></svg>
-                            Git / GitHub
-                        </li>
-                        <li class="skill-tag">
-                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="20 6 9 17 4 12"></polyline></svg>
-                            CI/CD (GitHub Actions)
-                        </li>
-                        <li class="skill-tag">
-                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="20 6 9 17 4 12"></polyline></svg>
-                            Linux / Nginx
-                        </li>
-                        <li class="skill-tag">
-                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="20 6 9 17 4 12"></polyline></svg>
-                            Vercel / Netlify
-                        </li>
+                <div class="skill-group">
+                    <h3>Tools &amp; Platforms</h3>
+                    <ul class="skill-items">
+                        <li>Git</li><li>GitHub Actions</li><li>Firebase</li>
+                        <li>Supabase</li><li>PostgreSQL</li><li>MySQL</li>
+                    </ul>
+                </div>
+                <div class="skill-group">
+                    <h3>DevOps &amp; Servers</h3>
+                    <ul class="skill-items">
+                        <li>Linux</li><li>Nginx</li><li>Apache</li><li>CI/CD Pipelines</li><li>REST APIs</li>
                     </ul>
                 </div>
             </div>
         </section>
 
-        <!-- Projects Section -->
-        <section id="projects" aria-labelledby="projects-title">
-            <div class="section-header">
-                <p class="section-label">Projects</p>
-                <h2 id="projects-title" class="section-title">Featured Work</h2>
-                <p class="section-description">
-                    Here are some of the projects I've worked on. Click to view details.
-                </p>
-            </div>
-            <div id="projects-grid" class="projects-grid" role="list">
-                <!-- Projects will be rendered dynamically from data/projects.json -->
+        <!-- About -->
+        <section id="about" class="section container reveal" aria-labelledby="about-title">
+            <header class="section-head">
+                <span class="section-index">04</span>
+                <h2 id="about-title" class="section-title">About</h2>
+            </header>
+
+            <div class="about-grid">
+                <div class="about-body">
+                    <p>
+                        I'm Aaron, a Computer Engineering student at Bahçeşehir Cyprus University
+                        (graduating 2027) and a full-stack developer. I'm Nigerian and based in Cyprus.
+                    </p>
+                    <p>
+                        I focus on building end-to-end digital products: intuitive interfaces backed by
+                        real databases, APIs, and servers. Across two internships and a full-stack role
+                        I've deployed and maintained production apps, built CI/CD pipelines, and worked
+                        close to the metal writing C++ image-processing code.
+                    </p>
+                    <p>
+                        I pick up new tools quickly and do my best work in small, collaborative teams
+                        where I can own a feature from the schema to the deploy.
+                    </p>
+
+                    <div class="info-block">
+                        <h3>Languages</h3>
+                        <ul class="lang-list">
+                            <li><span>English</span><span>Fluent</span></li>
+                            <li><span>Hausa</span><span>Native</span></li>
+                            <li><span>French</span><span>Beginner</span></li>
+                            <li><span>Turkish</span><span>Beginner</span></li>
+                        </ul>
+                    </div>
+                </div>
+
+                <aside class="about-side">
+                    <div class="about-photo-wrap">
+                        <img src="./assets/about-pic.jpg" alt="Portrait of Aaron Bandado" class="about-photo"
+                             loading="lazy" onerror="this.replaceWith(Object.assign(document.createElement('div'),{className:'about-photo about-photo--empty',textContent:'AB'}))">
+                    </div>
+                </aside>
             </div>
         </section>
 
-        <!-- Contact Section -->
-        <section id="contact" aria-labelledby="contact-title">
-            <div class="section-header">
-                <p class="section-label">Contact</p>
-                <h2 id="contact-title" class="section-title">Get In Touch</h2>
-                <p class="section-description">
-                    Have a question or want to work together? Feel free to reach out.
-                </p>
-            </div>
-            <div class="contact-grid">
+        <!-- Contact -->
+        <section id="contact" class="section container reveal" aria-labelledby="contact-title">
+            <header class="section-head">
+                <span class="section-index">05</span>
+                <h2 id="contact-title" class="section-title">Contact</h2>
+            </header>
+
+            <p class="contact-lede">Have a role, a project, or a question? Email is the fastest way to reach me.</p>
+
+            <dl class="contact-list">
                 <a href="mailto:aaron.aminu1@gmail.com" class="contact-card">
-                    <div class="contact-icon">
-                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
-                            <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"></path>
-                            <polyline points="22,6 12,13 2,6"></polyline>
-                        </svg>
-                    </div>
-                    <div class="contact-info">
-                        <h4>Email</h4>
-                        <p>aaron.aminu1@gmail.com</p>
-                    </div>
+                    <span class="contact-icon" aria-hidden="true">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
+                    </span>
+                    <div><dt>Email</dt><dd>aaron.aminu1@gmail.com</dd></div>
                 </a>
-                <a href="tel:+2347087122029" class="contact-card">
-                    <div class="contact-icon">
-                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
-                            <path d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07 19.5 19.5 0 01-6-6 19.79 19.79 0 01-3.07-8.67A2 2 0 014.11 2h3a2 2 0 012 1.72 12.84 12.84 0 00.7 2.81 2 2 0 01-.45 2.11L8.09 9.91a16 16 0 006 6l1.27-1.27a2 2 0 012.11-.45 12.84 12.84 0 002.81.7A2 2 0 0122 16.92z"></path>
-                        </svg>
-                    </div>
-                    <div class="contact-info">
-                        <h4>Phone</h4>
-                        <p>+234 708 712 2029</p>
-                    </div>
+                <a href="https://www.linkedin.com/in/aaron-bandado-13749a202/" class="contact-card" target="_blank" rel="noopener noreferrer">
+                    <span class="contact-icon" aria-hidden="true">
+                        <svg viewBox="0 0 24 24" fill="currentColor"><path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433a2.062 2.062 0 110-4.124 2.062 2.062 0 010 4.124zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/></svg>
+                    </span>
+                    <div><dt>LinkedIn</dt><dd>Aaron Bandado</dd></div>
                 </a>
-                <a href="https://www.linkedin.com/in/aaron-bandado-13749a202/" 
-                   class="contact-card" 
-                   target="_blank" 
-                   rel="noopener noreferrer">
-                    <div class="contact-icon">
-                        <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
-                            <path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433c-1.144 0-2.063-.926-2.063-2.065 0-1.138.92-2.063 2.063-2.063 1.14 0 2.064.925 2.064 2.063 0 1.139-.925 2.065-2.064 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/>
-                        </svg>
-                    </div>
-                    <div class="contact-info">
-                        <h4>LinkedIn</h4>
-                        <p>Connect with me</p>
-                    </div>
+                <a href="https://github.com/aaronaminubandado" class="contact-card" target="_blank" rel="noopener noreferrer">
+                    <span class="contact-icon" aria-hidden="true">
+                        <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 0C5.37 0 0 5.37 0 12c0 5.31 3.435 9.795 8.205 11.385.6.105.825-.255.825-.57 0-.285-.015-1.23-.015-2.235-3.015.555-3.795-.735-4.035-1.41-.135-.345-.72-1.41-1.23-1.695-.42-.225-1.02-.78-.015-.795.945-.015 1.62.87 1.845 1.23 1.08 1.815 2.805 1.305 3.495.99.105-.78.42-1.305.765-1.605-2.67-.3-5.46-1.335-5.46-5.925 0-1.305.465-2.385 1.23-3.225-.12-.3-.54-1.53.12-3.18 0 0 1.005-.315 3.3 1.23.96-.27 1.98-.405 3-.405s2.04.135 3 .405c2.295-1.56 3.3-1.23 3.3-1.23.66 1.65.24 2.88.12 3.18.765.84 1.23 1.905 1.23 3.225 0 4.605-2.805 5.625-5.475 5.925.435.375.81 1.095.81 2.22 0 1.605-.015 2.895-.015 3.3 0 .315.225.69.825.57A12.02 12.02 0 0024 12c0-6.63-5.37-12-12-12z"/></svg>
+                    </span>
+                    <div><dt>GitHub</dt><dd>@aaronaminubandado</dd></div>
                 </a>
-                <a href="https://github.com/aaronaminubandado" 
-                   class="contact-card" 
-                   target="_blank" 
-                   rel="noopener noreferrer">
-                    <div class="contact-icon">
-                        <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
-                            <path d="M12 0C5.37 0 0 5.37 0 12c0 5.31 3.435 9.795 8.205 11.385.6.105.825-.255.825-.57 0-.285-.015-1.23-.015-2.235-3.015.555-3.795-.735-4.035-1.41-.135-.345-.72-1.41-1.23-1.695-.42-.225-1.02-.78-.015-.795.945-.015 1.62.87 1.845 1.23 1.08 1.815 2.805 1.305 3.495.99.105-.78.42-1.305.765-1.605-2.67-.3-5.46-1.335-5.46-5.925 0-1.305.465-2.385 1.23-3.225-.12-.3-.54-1.53.12-3.18 0 0 1.005-.315 3.3 1.23.96-.27 1.98-.405 3-.405s2.04.135 3 .405c2.295-1.56 3.3-1.23 3.3-1.23.66 1.65.24 2.88.12 3.18.765.84 1.23 1.905 1.23 3.225 0 4.605-2.805 5.625-5.475 5.925.435.375.81 1.095.81 2.22 0 1.605-.015 2.895-.015 3.3 0 .315.225.69.825.57A12.02 12.02 0 0024 12c0-6.63-5.37-12-12-12z"/>
-                        </svg>
-                    </div>
-                    <div class="contact-info">
-                        <h4>GitHub</h4>
-                        <p>View my repositories</p>
-                    </div>
-                </a>
-            </div>
+            </dl>
         </section>
     </main>
 
-    <!-- Footer -->
-    <footer class="footer" role="contentinfo">
-        <p>&copy; 2025 Aaron Bandado. All rights reserved.</p>
+    <footer class="footer">
+        <div class="container footer-inner">
+            <p>© 2026 Aaron Bandado</p>
+        </div>
     </footer>
 
-    <!-- Project Modal -->
+    <!-- Project / case-study modal -->
     <div id="modal-overlay" class="modal-overlay" aria-hidden="true" role="dialog" aria-modal="true" aria-labelledby="modal-title">
-        <span id="focus-trap-start" class="modal-focus-trap" tabindex="0"></span>
-        
+        <span id="focus-trap-start" tabindex="0" class="visually-hidden"></span>
+
         <div class="modal">
-            <button id="modal-close" class="modal-close" aria-label="Close modal">
-                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
-                    <line x1="18" y1="6" x2="6" y2="18"></line>
-                    <line x1="6" y1="6" x2="18" y2="18"></line>
-                </svg>
+            <button id="modal-close" class="modal-close" type="button" aria-label="Close">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
             </button>
 
-            <div class="modal-carousel" role="region" aria-label="Project images">
+            <div class="modal-carousel" role="group" aria-roledescription="carousel" aria-label="Project screenshots">
                 <div id="carousel-track" class="carousel-track"></div>
-                
-                <button id="carousel-prev" class="carousel-btn prev" aria-label="Previous image">
-                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
-                        <polyline points="15 18 9 12 15 6"></polyline>
-                    </svg>
+                <button id="carousel-prev" class="carousel-btn prev" type="button" aria-label="Previous screenshot">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><polyline points="15 18 9 12 15 6"/></svg>
                 </button>
-                
-                <button id="carousel-next" class="carousel-btn next" aria-label="Next image">
-                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
-                        <polyline points="9 18 15 12 9 6"></polyline>
-                    </svg>
+                <button id="carousel-next" class="carousel-btn next" type="button" aria-label="Next screenshot">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><polyline points="9 18 15 12 9 6"/></svg>
                 </button>
-                
-                <div id="carousel-indicators" class="carousel-indicators" role="tablist" aria-label="Image navigation"></div>
+                <div id="carousel-indicators" class="carousel-indicators" role="tablist" aria-label="Screenshot navigation"></div>
             </div>
 
-            <div class="modal-info">
+            <div class="modal-body">
+                <p id="modal-eyebrow" class="modal-eyebrow"></p>
                 <h2 id="modal-title" class="modal-title"></h2>
-                <p id="modal-description" class="modal-description"></p>
-                <div id="modal-tech" class="modal-tech"></div>
+                <p id="modal-overview" class="modal-overview"></p>
+                <div id="modal-tech" class="tag-row modal-tech"></div>
+                <div id="modal-casestudy" class="case-study"></div>
                 <div class="modal-actions">
-                    <a id="modal-repo" href="#" class="btn btn-secondary" target="_blank" rel="noopener noreferrer">
-                        <svg class="btn-icon" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
-                            <path d="M12 0C5.37 0 0 5.37 0 12c0 5.31 3.435 9.795 8.205 11.385.6.105.825-.255.825-.57 0-.285-.015-1.23-.015-2.235-3.015.555-3.795-.735-4.035-1.41-.135-.345-.72-1.41-1.23-1.695-.42-.225-1.02-.78-.015-.795.945-.015 1.62.87 1.845 1.23 1.08 1.815 2.805 1.305 3.495.99.105-.78.42-1.305.765-1.605-2.67-.3-5.46-1.335-5.46-5.925 0-1.305.465-2.385 1.23-3.225-.12-.3-.54-1.53.12-3.18 0 0 1.005-.315 3.3 1.23.96-.27 1.98-.405 3-.405s2.04.135 3 .405c2.295-1.56 3.3-1.23 3.3-1.23.66 1.65.24 2.88.12 3.18.765.84 1.23 1.905 1.23 3.225 0 4.605-2.805 5.625-5.475 5.925.435.375.81 1.095.81 2.22 0 1.605-.015 2.895-.015 3.3 0 .315.225.69.825.57A12.02 12.02 0 0024 12c0-6.63-5.37-12-12-12z"/>
-                        </svg>
-                        View Code
+                    <a id="modal-repo" class="btn btn-secondary" href="#" target="_blank" rel="noopener noreferrer">
+                        <svg class="btn-icon" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 0C5.37 0 0 5.37 0 12c0 5.31 3.435 9.795 8.205 11.385.6.105.825-.255.825-.57 0-.285-.015-1.23-.015-2.235-3.015.555-3.795-.735-4.035-1.41-.135-.345-.72-1.41-1.23-1.695-.42-.225-1.02-.78-.015-.795.945-.015 1.62.87 1.845 1.23 1.08 1.815 2.805 1.305 3.495.99.105-.78.42-1.305.765-1.605-2.67-.3-5.46-1.335-5.46-5.925 0-1.305.465-2.385 1.23-3.225-.12-.3-.54-1.53.12-3.18 0 0 1.005-.315 3.3 1.23.96-.27 1.98-.405 3-.405s2.04.135 3 .405c2.295-1.56 3.3-1.23 3.3-1.23.66 1.65.24 2.88.12 3.18.765.84 1.23 1.905 1.23 3.225 0 4.605-2.805 5.625-5.475 5.925.435.375.81 1.095.81 2.22 0 1.605-.015 2.895-.015 3.3 0 .315.225.69.825.57A12.02 12.02 0 0024 12c0-6.63-5.37-12-12-12z"/></svg>
+                        View code
                     </a>
-                    <a id="modal-live" href="#" class="btn btn-primary" target="_blank" rel="noopener noreferrer">
-                        <svg class="btn-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
-                            <path d="M18 13v6a2 2 0 01-2 2H5a2 2 0 01-2-2V8a2 2 0 012-2h6M15 3h6v6M10 14L21 3"></path>
-                        </svg>
-                        Live Demo
+                    <a id="modal-live" class="btn btn-primary" href="#" target="_blank" rel="noopener noreferrer">
+                        <svg class="btn-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M18 13v6a2 2 0 01-2 2H5a2 2 0 01-2-2V8a2 2 0 012-2h6M15 3h6v6M10 14L21 3"/></svg>
+                        Live demo
                     </a>
                 </div>
             </div>
         </div>
 
-        <span id="focus-trap-end" class="modal-focus-trap" tabindex="0"></span>
+        <span id="focus-trap-end" tabindex="0" class="visually-hidden"></span>
     </div>
 
+    <script src="./data/projects.js"></script>
     <script src="./scripts/main.js" defer></script>
 </body>
 </html>

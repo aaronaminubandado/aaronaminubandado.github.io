@@ -1,479 +1,490 @@
 /**
- * Portfolio Main JavaScript
- * Handles: Navigation, Theme Toggle, Projects Rendering, Modal with Carousel
+ * Aaron Bandado — Portfolio
+ * Navigation, theme, project rendering, deep-linkable case-study modal,
+ * carousel, and scroll reveal. No dependencies, no build step.
  */
-
-(function() {
+(function () {
     'use strict';
 
-    // ========================================
-    // State
-    // ========================================
-    
-    let projectsData = [];
-    let currentProject = null;
-    let currentSlideIndex = 0;
-    let lastFocusedElement = null;
-    let touchStartX = 0;
-    let touchEndX = 0;
+    var projects = [];
+    var current = null;
+    var slide = 0;
+    var workSlide = 0;
+    var workCount = 0;
+    var lastFocused = null;
+    var touchStartX = 0;
+    var workTouchStartX = 0;
 
-    // ========================================
-    // DOM Elements
-    // ========================================
-    
-    const elements = {
-        // Navigation
-        hamburger: document.getElementById('hamburger'),
-        mobileNav: document.getElementById('mobile-nav'),
-        
-        // Theme
-        themeToggle: document.getElementById('theme-toggle'),
-        
-        // Projects
-        projectsGrid: document.getElementById('projects-grid'),
-        
-        // Modal
-        modalOverlay: document.getElementById('modal-overlay'),
-        modalClose: document.getElementById('modal-close'),
-        carouselTrack: document.getElementById('carousel-track'),
-        carouselIndicators: document.getElementById('carousel-indicators'),
-        carouselPrev: document.getElementById('carousel-prev'),
-        carouselNext: document.getElementById('carousel-next'),
-        modalTitle: document.getElementById('modal-title'),
-        modalDescription: document.getElementById('modal-description'),
-        modalTech: document.getElementById('modal-tech'),
-        modalRepo: document.getElementById('modal-repo'),
-        modalLive: document.getElementById('modal-live'),
-        focusTrapStart: document.getElementById('focus-trap-start'),
-        focusTrapEnd: document.getElementById('focus-trap-end')
-    };
+    var el = {};
 
-    // ========================================
-    // Initialization
-    // ========================================
-    
-    document.addEventListener('DOMContentLoaded', init);
-
-    function init() {
-        initNavigation();
+    document.addEventListener('DOMContentLoaded', function () {
+        cache();
+        initNav();
         initTheme();
-        initLazyLoading();
+        initReveal();
+        initModalControls();
         loadProjects();
+    });
+
+    function cache() {
+        el = {
+            hamburger: byId('hamburger'),
+            mobileNav: byId('mobile-nav'),
+            themeToggle: byId('theme-toggle'),
+            workTrack: byId('work-track'),
+            workPrev: byId('work-prev'),
+            workNext: byId('work-next'),
+            workIndicators: byId('work-indicators'),
+            workCarousel: document.querySelector('.work-carousel'),
+            moreWork: byId('more-work'),
+            overlay: byId('modal-overlay'),
+            close: byId('modal-close'),
+            track: byId('carousel-track'),
+            indicators: byId('carousel-indicators'),
+            prev: byId('carousel-prev'),
+            next: byId('carousel-next'),
+            eyebrow: byId('modal-eyebrow'),
+            title: byId('modal-title'),
+            overview: byId('modal-overview'),
+            tech: byId('modal-tech'),
+            caseStudy: byId('modal-casestudy'),
+            repo: byId('modal-repo'),
+            live: byId('modal-live'),
+            trapStart: byId('focus-trap-start'),
+            trapEnd: byId('focus-trap-end')
+        };
     }
 
-    // ========================================
-    // Navigation
-    // ========================================
-    
-    function initNavigation() {
-        if (!elements.hamburger || !elements.mobileNav) return;
+    function byId(id) { return document.getElementById(id); }
 
-        elements.hamburger.addEventListener('click', toggleMobileMenu);
-        
-        // Close mobile menu on link click
-        const mobileLinks = elements.mobileNav.querySelectorAll('.nav-mobile-link');
-        mobileLinks.forEach(link => {
-            link.addEventListener('click', closeMobileMenu);
-        });
+    function esc(text) {
+        var d = document.createElement('div');
+        d.textContent = text == null ? '' : text;
+        return d.innerHTML;
+    }
 
-        // Close on escape
-        document.addEventListener('keydown', (e) => {
-            if (e.key === 'Escape' && elements.mobileNav.hidden === false) {
-                closeMobileMenu();
+    /* ---------------------------------------------------------------- Nav */
+    function initNav() {
+        if (!el.hamburger || !el.mobileNav) return;
+
+        el.hamburger.addEventListener('click', function () {
+            var open = el.hamburger.getAttribute('aria-expanded') === 'true';
+            el.hamburger.setAttribute('aria-expanded', String(!open));
+            el.mobileNav.hidden = open;
+            if (!open) {
+                var first = el.mobileNav.querySelector('.nav-mobile-link');
+                if (first) first.focus();
             }
         });
-    }
 
-    function toggleMobileMenu() {
-        const isExpanded = elements.hamburger.getAttribute('aria-expanded') === 'true';
-        elements.hamburger.setAttribute('aria-expanded', !isExpanded);
-        elements.mobileNav.hidden = isExpanded;
-        
-        if (!isExpanded) {
-            const firstLink = elements.mobileNav.querySelector('.nav-mobile-link');
-            if (firstLink) firstLink.focus();
-        }
-    }
+        el.mobileNav.querySelectorAll('.nav-mobile-link').forEach(function (link) {
+            link.addEventListener('click', closeMobileNav);
+        });
 
-    function closeMobileMenu() {
-        elements.hamburger.setAttribute('aria-expanded', 'false');
-        elements.mobileNav.hidden = true;
-        elements.hamburger.focus();
-    }
-
-    // ========================================
-    // Theme Toggle
-    // ========================================
-    
-    function initTheme() {
-        if (!elements.themeToggle) return;
-
-        // Check for saved preference or system preference
-        const savedTheme = localStorage.getItem('theme');
-        const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
-        
-        if (savedTheme === 'dark' || (!savedTheme && prefersDark)) {
-            document.body.classList.add('dark-mode');
-        }
-
-        elements.themeToggle.addEventListener('click', toggleTheme);
-    }
-
-    function toggleTheme() {
-        document.body.classList.toggle('dark-mode');
-        const isDark = document.body.classList.contains('dark-mode');
-        localStorage.setItem('theme', isDark ? 'dark' : 'light');
-    }
-
-    // ========================================
-    // Lazy Loading
-    // ========================================
-    
-    function initLazyLoading() {
-        if ('IntersectionObserver' in window) {
-            const imageObserver = new IntersectionObserver((entries, observer) => {
-                entries.forEach(entry => {
-                    if (entry.isIntersecting) {
-                        const img = entry.target;
-                        if (img.dataset.src) {
-                            img.src = img.dataset.src;
-                            img.removeAttribute('data-src');
-                            img.classList.add('loaded');
-                        }
-                        observer.unobserve(img);
-                    }
-                });
-            }, { rootMargin: '50px' });
-
-            document.querySelectorAll('img[data-src]').forEach(img => {
-                imageObserver.observe(img);
-            });
-        } else {
-            // Fallback for older browsers
-            document.querySelectorAll('img[data-src]').forEach(img => {
-                img.src = img.dataset.src;
-                img.removeAttribute('data-src');
-                img.classList.add('loaded');
-            });
-        }
-    }
-
-    // ========================================
-    // Projects Data
-    // ========================================
-    
-    async function loadProjects() {
-        try {
-            const response = await fetch('./data/projects.json');
-            if (!response.ok) throw new Error('Failed to load projects');
-            projectsData = await response.json();
-            renderProjects();
-        } catch (error) {
-            console.error('Error loading projects:', error);
-            showProjectsError();
-        }
-    }
-
-    function renderProjects() {
-        if (!elements.projectsGrid) return;
-        
-        elements.projectsGrid.innerHTML = projectsData.map(project => {
-            const primaryImage = project.images && project.images.length > 0 
-                ? project.images[0] 
-                : './assets/placeholder.png';
-
-            return `
-                <article 
-                    class="project-card" 
-                    data-project-id="${project.id}"
-                    tabindex="0"
-                    role="button"
-                    aria-label="View ${project.title} project details"
-                >
-                    <div class="project-image-wrapper">
-                        <img 
-                            class="project-image"
-                            data-src="${primaryImage}"
-                            alt="${project.title} project screenshot"
-                            loading="lazy"
-                            onerror="this.src='./assets/placeholder.png'; this.classList.add('loaded')"
-                        />
-                    </div>
-                    <div class="project-content">
-                        <h3 class="project-title">${escapeHtml(project.title)}</h3>
-                        <p class="project-description">${escapeHtml(project.shortDescription)}</p>
-                        <div class="project-tech">
-                            ${project.tech.slice(0, 3).map(t => 
-                                `<span class="project-tech-tag">${escapeHtml(t)}</span>`
-                            ).join('')}
-                        </div>
-                        <div class="project-links">
-                            <a href="${escapeHtml(project.repoUrl)}" 
-                               class="project-link" 
-                               target="_blank" 
-                               rel="noopener noreferrer"
-                               aria-label="View ${project.title} on GitHub"
-                               onclick="event.stopPropagation()">
-                                <svg aria-hidden="true" viewBox="0 0 24 24" fill="currentColor">
-                                    <path d="M12 0C5.37 0 0 5.37 0 12c0 5.31 3.435 9.795 8.205 11.385.6.105.825-.255.825-.57 0-.285-.015-1.23-.015-2.235-3.015.555-3.795-.735-4.035-1.41-.135-.345-.72-1.41-1.23-1.695-.42-.225-1.02-.78-.015-.795.945-.015 1.62.87 1.845 1.23 1.08 1.815 2.805 1.305 3.495.99.105-.78.42-1.305.765-1.605-2.67-.3-5.46-1.335-5.46-5.925 0-1.305.465-2.385 1.23-3.225-.12-.3-.54-1.53.12-3.18 0 0 1.005-.315 3.3 1.23.96-.27 1.98-.405 3-.405s2.04.135 3 .405c2.295-1.56 3.3-1.23 3.3-1.23.66 1.65.24 2.88.12 3.18.765.84 1.23 1.905 1.23 3.225 0 4.605-2.805 5.625-5.475 5.925.435.375.81 1.095.81 2.22 0 1.605-.015 2.895-.015 3.3 0 .315.225.69.825.57A12.02 12.02 0 0024 12c0-6.63-5.37-12-12-12z"/>
-                                </svg>
-                                Code
-                            </a>
-                            ${project.liveUrl ? `
-                                <a href="${escapeHtml(project.liveUrl)}" 
-                                   class="project-link" 
-                                   target="_blank" 
-                                   rel="noopener noreferrer"
-                                   aria-label="View ${project.title} live demo"
-                                   onclick="event.stopPropagation()">
-                                    <svg aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                                        <path d="M18 13v6a2 2 0 01-2 2H5a2 2 0 01-2-2V8a2 2 0 012-2h6M15 3h6v6M10 14L21 3"/>
-                                    </svg>
-                                    Demo
-                                </a>
-                            ` : ''}
-                        </div>
-                    </div>
-                </article>
-            `;
-        }).join('');
-
-        // Add click and keyboard handlers to project cards
-        const cards = elements.projectsGrid.querySelectorAll('.project-card');
-        cards.forEach(card => {
-            card.addEventListener('click', () => openProjectModal(card.dataset.projectId));
-            card.addEventListener('keydown', (e) => {
-                if (e.key === 'Enter' || e.key === ' ') {
-                    e.preventDefault();
-                    openProjectModal(card.dataset.projectId);
-                }
-            });
+        document.addEventListener('keydown', function (e) {
+            if (e.key === 'Escape' && !el.mobileNav.hidden) closeMobileNav();
         });
     }
 
-    function showProjectsError() {
-        if (!elements.projectsGrid) return;
-        elements.projectsGrid.innerHTML = `
-            <p style="grid-column: 1/-1; text-align: center; color: var(--color-text-muted);">
-                Unable to load projects. Please try again later.
-            </p>
-        `;
+    function closeMobileNav() {
+        if (!el.hamburger) return;
+        el.hamburger.setAttribute('aria-expanded', 'false');
+        el.mobileNav.hidden = true;
     }
 
-    // ========================================
-    // Modal
-    // ========================================
-    
-    function openProjectModal(projectId) {
-        const project = projectsData.find(p => p.id === projectId);
-        if (!project) return;
+    /* -------------------------------------------------------------- Theme */
+    function initTheme() {
+        if (!el.themeToggle) return;
+        el.themeToggle.addEventListener('click', function () {
+            var dark = document.documentElement.getAttribute('data-theme') === 'dark';
+            var next = dark ? 'light' : 'dark';
+            document.documentElement.setAttribute('data-theme', next);
+            try { localStorage.setItem('theme', next); } catch (e) {}
+        });
+    }
 
-        currentProject = project;
-        currentSlideIndex = 0;
+    /* ------------------------------------------------------------- Reveal */
+    function initReveal() {
+        var items = document.querySelectorAll('.reveal');
+        if (!('IntersectionObserver' in window)) {
+            items.forEach(function (i) { i.classList.add('is-visible'); });
+            return;
+        }
+        var obs = new IntersectionObserver(function (entries) {
+            entries.forEach(function (entry) {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('is-visible');
+                    obs.unobserve(entry.target);
+                }
+            });
+        }, { rootMargin: '0px 0px -10% 0px' });
+        items.forEach(function (i) { obs.observe(i); });
+    }
 
-        // Save currently focused element
-        lastFocusedElement = document.activeElement;
+    /* ------------------------------------------------------------ Projects */
+    function loadProjects() {
+        if (Array.isArray(window.PORTFOLIO_PROJECTS)) {
+            projects = window.PORTFOLIO_PROJECTS;
+            renderFeatured();
+            renderSecondary();
+            openFromHash();
+            return;
+        }
 
-        // Populate modal content
-        elements.modalTitle.textContent = project.title;
-        elements.modalDescription.textContent = project.longDescription;
-        
-        // Tech stack
-        elements.modalTech.innerHTML = project.tech.map(t => 
-            `<span class="project-tech-tag">${escapeHtml(t)}</span>`
-        ).join('');
+        fetch('./data/projects.json')
+            .then(function (r) { if (!r.ok) throw new Error('load failed'); return r.json(); })
+            .then(function (data) {
+                projects = data;
+                renderFeatured();
+                renderSecondary();
+                openFromHash();
+            })
+            .catch(function (err) {
+                console.error('Error loading projects:', err);
+                if (el.workTrack) {
+                    el.workTrack.innerHTML = '<p style="color:var(--text-muted);padding:var(--space-4) 0">Projects are unavailable right now.</p>';
+                }
+            });
+    }
 
-        // Links
-        elements.modalRepo.href = project.repoUrl;
-        
-        if (project.liveUrl) {
-            elements.modalLive.href = project.liveUrl;
-            elements.modalLive.style.display = 'inline-flex';
+    function tags(list, max) {
+        return list.slice(0, max).map(function (t) {
+            return '<span class="tag">' + esc(t) + '</span>';
+        }).join('');
+    }
+
+    function frame(p) {
+        var hasImage = p.images && p.images.length > 0;
+        var placard =
+            '<div class="frame-placard">' +
+                '<span class="placard-title">' + esc(p.title) + '</span>' +
+                '<span class="placard-meta">' + esc(p.tech.slice(0, 3).join(' · ')) + '</span>' +
+            '</div>';
+        var img = hasImage
+            ? '<img class="frame-img" src="' + esc(p.images[0]) + '" alt="' + esc(p.title) +
+              ' screenshot" loading="lazy" onerror="this.remove()">'
+            : '';
+        return '<div class="project-frame">' + placard + img + '</div>';
+    }
+
+    function renderFeatured() {
+        if (!el.workTrack) return;
+        var featured = projects.filter(function (p) { return p.featured; });
+        workCount = featured.length;
+        workSlide = 0;
+
+        el.workTrack.innerHTML = featured.map(function (p, i) {
+            var meta = [p.year, p.role, p.status].filter(Boolean).map(esc).join('</span><span class="dot">/</span><span>');
+            return '' +
+                '<article class="work-carousel-slide project-row" role="tabpanel" ' +
+                'aria-hidden="' + (i === 0 ? 'false' : 'true') + '" data-index="' + i + '">' +
+                '<div class="project-body">' +
+                    '<div class="project-eyebrow"><span>' + meta + '</span></div>' +
+                    '<h3 class="project-title">' + esc(p.title) + '</h3>' +
+                    '<p class="project-desc">' + esc(p.shortDescription) + '</p>' +
+                    '<div class="tag-row">' + tags(p.tech, 5) + '</div>' +
+                    '<button class="project-cta" type="button" data-id="' + esc(p.id) + '" ' +
+                    'aria-label="Read the ' + esc(p.title) + ' case study">' +
+                        'Read case study ' +
+                        '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg>' +
+                    '</button>' +
+                '</div>' +
+                frame(p) +
+            '</article>';
+        }).join('');
+
+        el.workTrack.querySelectorAll('.project-cta').forEach(function (btn) {
+            btn.addEventListener('click', function (e) {
+                e.stopPropagation();
+                openModal(btn.dataset.id);
+            });
+        });
+
+        initWorkCarousel(featured);
+    }
+
+    function initWorkCarousel(featured) {
+        if (!el.workTrack || !workCount) return;
+
+        var showControls = workCount > 1;
+        if (el.workPrev) el.workPrev.style.display = showControls ? '' : 'none';
+        if (el.workNext) el.workNext.style.display = showControls ? '' : 'none';
+
+        if (el.workIndicators) {
+            el.workIndicators.innerHTML = showControls ? featured.map(function (p, i) {
+                return '<button class="work-carousel-indicator' + (i === 0 ? ' active' : '') + '" type="button" ' +
+                    'role="tab" aria-selected="' + (i === 0 ? 'true' : 'false') + '" ' +
+                    'data-index="' + i + '" aria-label="' + esc(p.title) + '"></button>';
+            }).join('') : '';
+
+            el.workIndicators.querySelectorAll('.work-carousel-indicator').forEach(function (btn) {
+                btn.addEventListener('click', function () {
+                    goToWorkSlide(parseInt(btn.dataset.index, 10));
+                });
+            });
+        }
+
+        if (el.workPrev) {
+            el.workPrev.onclick = function () { changeWorkSlide(-1); };
+        }
+        if (el.workNext) {
+            el.workNext.onclick = function () { changeWorkSlide(1); };
+        }
+
+        if (el.workCarousel && showControls) {
+            el.workCarousel.onkeydown = onWorkCarouselKey;
+        }
+
+        setupWorkSwipe();
+        updateWorkCarousel();
+    }
+
+    function onWorkCarouselKey(e) {
+        if (e.key === 'ArrowLeft') { e.preventDefault(); changeWorkSlide(-1); }
+        else if (e.key === 'ArrowRight') { e.preventDefault(); changeWorkSlide(1); }
+    }
+
+    function changeWorkSlide(dir) {
+        if (workCount < 2) return;
+        workSlide = (workSlide + dir + workCount) % workCount;
+        updateWorkCarousel();
+    }
+
+    function goToWorkSlide(i) {
+        workSlide = i;
+        updateWorkCarousel();
+    }
+
+    function updateWorkCarousel() {
+        if (!el.workTrack) return;
+        el.workTrack.style.transform = 'translateX(-' + (workSlide * 100) + '%)';
+
+        el.workTrack.querySelectorAll('.work-carousel-slide').forEach(function (slideEl, i) {
+            slideEl.setAttribute('aria-hidden', i === workSlide ? 'false' : 'true');
+        });
+
+        if (el.workIndicators) {
+            el.workIndicators.querySelectorAll('.work-carousel-indicator').forEach(function (btn, i) {
+                btn.classList.toggle('active', i === workSlide);
+                btn.setAttribute('aria-selected', i === workSlide ? 'true' : 'false');
+            });
+        }
+    }
+
+    function setupWorkSwipe() {
+        if (!el.workCarousel || workCount < 2) return;
+        var viewport = el.workCarousel.querySelector('.work-carousel-viewport');
+        if (!viewport) return;
+
+        viewport.addEventListener('touchstart', function (e) {
+            workTouchStartX = e.changedTouches[0].screenX;
+        }, { passive: true });
+
+        viewport.addEventListener('touchend', function (e) {
+            var diff = workTouchStartX - e.changedTouches[0].screenX;
+            if (Math.abs(diff) > 50) changeWorkSlide(diff > 0 ? 1 : -1);
+        }, { passive: true });
+    }
+
+    function renderSecondary() {
+        if (!el.moreWork) return;
+        var secondary = projects.filter(function (p) { return !p.featured; });
+        if (!secondary.length) { el.moreWork.remove(); return; }
+
+        el.moreWork.innerHTML = secondary.map(function (p) {
+            return '' +
+                '<a class="more-card" href="' + esc(p.repoUrl) + '" target="_blank" rel="noopener noreferrer">' +
+                    '<h4>' + esc(p.title) + '</h4>' +
+                    '<p>' + esc(p.shortDescription) + '</p>' +
+                    '<div class="tag-row">' + tags(p.tech, 3) + '</div>' +
+                '</a>';
+        }).join('');
+    }
+
+    /* -------------------------------------------------------------- Modal */
+    function block(label, value) {
+        if (!value) return '';
+        var isTodo = /^todo/i.test(String(value).trim());
+        return '<div class="case-block"><h4>' + esc(label) + '</h4>' +
+            '<p' + (isTodo ? ' class="todo"' : '') + '>' + esc(value) + '</p></div>';
+    }
+
+    function listBlock(label, arr) {
+        if (!arr || !arr.length) return '';
+        var items = arr.map(function (i) { return '<li>' + esc(i) + '</li>'; }).join('');
+        return '<div class="case-block"><h4>' + esc(label) + '</h4><ul>' + items + '</ul></div>';
+    }
+
+    function openModal(id, fromHistory) {
+        var p = projects.find(function (x) { return x.id === id; });
+        if (!p) return;
+        current = p;
+        slide = 0;
+        lastFocused = document.activeElement;
+
+        el.eyebrow.textContent = [p.year, p.role, p.status].filter(Boolean).join('  ·  ');
+        el.title.textContent = p.title;
+        el.overview.textContent = (p.caseStudy && p.caseStudy.overview) || p.longDescription || p.shortDescription || '';
+        el.tech.innerHTML = tags(p.tech, p.tech.length);
+
+        var cs = p.caseStudy || {};
+        el.caseStudy.innerHTML =
+            block('Problem', cs.problem) +
+            block('Constraints', cs.constraints) +
+            block('Approach', cs.approach) +
+            block('Architecture', cs.architecture) +
+            listBlock('Key decisions', cs.decisions) +
+            block('Challenges', cs.challenges) +
+            block('Results', cs.results) +
+            block('Lessons', cs.lessons);
+
+        el.repo.href = p.repoUrl || '#';
+        el.repo.style.display = p.repoUrl ? 'inline-flex' : 'none';
+        if (p.liveUrl) {
+            el.live.href = p.liveUrl;
+            el.live.style.display = 'inline-flex';
         } else {
-            elements.modalLive.style.display = 'none';
+            el.live.style.display = 'none';
         }
 
-        // Setup carousel
-        setupCarousel(project.images || ['./assets/placeholder.png']);
+        setupCarousel(p.images && p.images.length ? p.images : null);
 
-        // Show modal
-        elements.modalOverlay.setAttribute('aria-hidden', 'false');
+        el.overlay.setAttribute('aria-hidden', 'false');
         document.body.style.overflow = 'hidden';
+        el.close.focus();
+        document.addEventListener('keydown', onModalKey);
 
-        // Focus trap
-        elements.focusTrapStart.focus();
-        
-        // Add event listeners
-        document.addEventListener('keydown', handleModalKeydown);
-    }
-
-    function closeProjectModal() {
-        elements.modalOverlay.setAttribute('aria-hidden', 'true');
-        document.body.style.overflow = '';
-        
-        // Remove event listeners
-        document.removeEventListener('keydown', handleModalKeydown);
-        
-        // Restore focus
-        if (lastFocusedElement) {
-            lastFocusedElement.focus();
+        if (!fromHistory) {
+            try { history.pushState({ caseId: id }, '', '#' + id); } catch (e) {}
         }
-        
-        currentProject = null;
     }
 
-    function handleModalKeydown(e) {
+    function closeModal(fromHistory) {
+        el.overlay.setAttribute('aria-hidden', 'true');
+        document.body.style.overflow = '';
+        document.removeEventListener('keydown', onModalKey);
+        if (lastFocused && lastFocused.focus) lastFocused.focus();
+        current = null;
+
+        if (!fromHistory && history.state && history.state.caseId) {
+            try { history.back(); } catch (e) {}
+        }
+    }
+
+    function isOpen() { return el.overlay.getAttribute('aria-hidden') === 'false'; }
+
+    function onModalKey(e) {
         switch (e.key) {
-            case 'Escape':
-                closeProjectModal();
-                break;
-            case 'ArrowLeft':
-                changeSlide(-1);
-                break;
-            case 'ArrowRight':
-                changeSlide(1);
-                break;
-            case 'Tab':
-                trapFocus(e);
-                break;
+            case 'Escape': closeModal(); break;
+            case 'ArrowLeft': changeSlide(-1); break;
+            case 'ArrowRight': changeSlide(1); break;
+            case 'Tab': trapFocus(e); break;
         }
     }
 
     function trapFocus(e) {
-        const focusableElements = elements.modalOverlay.querySelectorAll(
-            'button, [href], input, select, textarea, [tabindex]:not([tabindex="-1"])'
-        );
-        
-        const firstElement = focusableElements[0];
-        const lastElement = focusableElements[focusableElements.length - 1];
-
-        if (e.shiftKey && document.activeElement === firstElement) {
-            e.preventDefault();
-            lastElement.focus();
-        } else if (!e.shiftKey && document.activeElement === lastElement) {
-            e.preventDefault();
-            firstElement.focus();
+        var focusables = el.overlay.querySelectorAll('button, [href], [tabindex]:not([tabindex="-1"])');
+        var visible = Array.prototype.filter.call(focusables, function (n) {
+            return n.offsetParent !== null || n === el.trapStart || n === el.trapEnd;
+        });
+        var first = visible[0];
+        var last = visible[visible.length - 1];
+        if (e.shiftKey && document.activeElement === first) {
+            e.preventDefault(); last.focus();
+        } else if (!e.shiftKey && document.activeElement === last) {
+            e.preventDefault(); first.focus();
         }
     }
 
-    // ========================================
-    // Carousel
-    // ========================================
-    
+    /* ------------------------------------------------------------ Carousel */
     function setupCarousel(images) {
-        const slides = images.map((img, index) => `
-            <div class="carousel-slide ${index === 0 ? 'active' : ''}" data-index="${index}">
-                <img src="${img}" alt="Project screenshot ${index + 1}" 
-                     onerror="this.src='./assets/placeholder.png'">
-            </div>
-        `).join('');
+        if (!images) {
+            el.track.innerHTML = '<div class="carousel-empty"><span>' + esc(current.title) + '</span><span>Screenshot coming soon</span></div>';
+            el.indicators.innerHTML = '';
+            toggleCarouselControls(false);
+            return;
+        }
+        toggleCarouselControls(images.length > 1);
 
-        const indicators = images.map((_, index) => `
-            <button class="carousel-indicator ${index === 0 ? 'active' : ''}" 
-                    data-index="${index}"
-                    aria-label="Go to slide ${index + 1}">
-            </button>
-        `).join('');
+        el.track.innerHTML = images.map(function (img, i) {
+            return '<div class="carousel-slide' + (i === 0 ? ' active' : '') + '">' +
+                '<img src="' + esc(img) + '" alt="' + esc(current.title) + ' screenshot ' + (i + 1) + '" ' +
+                'onerror="this.closest(\'.carousel-slide\').innerHTML=\'<div class=&quot;carousel-empty&quot;>Image unavailable</div>\'">' +
+                '</div>';
+        }).join('');
 
-        elements.carouselTrack.innerHTML = slides;
-        elements.carouselIndicators.innerHTML = indicators;
+        el.indicators.innerHTML = images.length > 1 ? images.map(function (_, i) {
+            return '<button class="carousel-indicator' + (i === 0 ? ' active' : '') + '" type="button" data-index="' + i + '" aria-label="Screenshot ' + (i + 1) + '"></button>';
+        }).join('') : '';
 
-        // Add indicator click handlers
-        const indicatorButtons = elements.carouselIndicators.querySelectorAll('.carousel-indicator');
-        indicatorButtons.forEach(btn => {
-            btn.addEventListener('click', () => {
-                goToSlide(parseInt(btn.dataset.index));
-            });
+        el.indicators.querySelectorAll('.carousel-indicator').forEach(function (btn) {
+            btn.addEventListener('click', function () { goToSlide(parseInt(btn.dataset.index, 10)); });
         });
 
-        // Setup swipe detection
-        setupSwipeDetection();
+        setupSwipe();
     }
 
-    function changeSlide(direction) {
-        const images = currentProject.images || ['./assets/placeholder.png'];
-        currentSlideIndex += direction;
-        
-        if (currentSlideIndex < 0) currentSlideIndex = images.length - 1;
-        if (currentSlideIndex >= images.length) currentSlideIndex = 0;
-        
+    function toggleCarouselControls(show) {
+        var display = show ? '' : 'none';
+        el.prev.style.display = display;
+        el.next.style.display = display;
+    }
+
+    function changeSlide(dir) {
+        if (!current || !current.images || current.images.length < 2) return;
+        slide = (slide + dir + current.images.length) % current.images.length;
         updateCarousel();
     }
 
-    function goToSlide(index) {
-        currentSlideIndex = index;
-        updateCarousel();
-    }
+    function goToSlide(i) { slide = i; updateCarousel(); }
 
     function updateCarousel() {
-        const slides = elements.carouselTrack.querySelectorAll('.carousel-slide');
-        const indicators = elements.carouselIndicators.querySelectorAll('.carousel-indicator');
-
-        slides.forEach((slide, i) => {
-            slide.classList.toggle('active', i === currentSlideIndex);
+        el.track.querySelectorAll('.carousel-slide').forEach(function (s, i) {
+            s.classList.toggle('active', i === slide);
         });
-
-        indicators.forEach((indicator, i) => {
-            indicator.classList.toggle('active', i === currentSlideIndex);
+        el.indicators.querySelectorAll('.carousel-indicator').forEach(function (b, i) {
+            b.classList.toggle('active', i === slide);
         });
     }
 
-    function setupSwipeDetection() {
-        const carousel = elements.carouselTrack.parentElement;
-
-        carousel.addEventListener('touchstart', (e) => {
+    function setupSwipe() {
+        var region = el.track.parentElement;
+        region.addEventListener('touchstart', function (e) {
             touchStartX = e.changedTouches[0].screenX;
         }, { passive: true });
-
-        carousel.addEventListener('touchend', (e) => {
-            touchEndX = e.changedTouches[0].screenX;
-            handleSwipe();
+        region.addEventListener('touchend', function (e) {
+            var diff = touchStartX - e.changedTouches[0].screenX;
+            if (Math.abs(diff) > 50) changeSlide(diff > 0 ? 1 : -1);
         }, { passive: true });
     }
 
-    function handleSwipe() {
-        const swipeThreshold = 50;
-        const diff = touchStartX - touchEndX;
-
-        if (Math.abs(diff) > swipeThreshold) {
-            if (diff > 0) {
-                changeSlide(1); // Swipe left, next slide
-            } else {
-                changeSlide(-1); // Swipe right, previous slide
-            }
+    /* ------------------------------------------------------ Modal controls */
+    function initModalControls() {
+        if (el.close) el.close.addEventListener('click', function () { closeModal(); });
+        if (el.prev) el.prev.addEventListener('click', function () { changeSlide(-1); });
+        if (el.next) el.next.addEventListener('click', function () { changeSlide(1); });
+        if (el.overlay) {
+            el.overlay.addEventListener('click', function (e) {
+                if (e.target === el.overlay) closeModal();
+            });
         }
-    }
-
-    // Initialize modal close handlers
-    if (elements.modalClose) {
-        elements.modalClose.addEventListener('click', closeProjectModal);
-    }
-
-    if (elements.carouselPrev) {
-        elements.carouselPrev.addEventListener('click', () => changeSlide(-1));
-    }
-
-    if (elements.carouselNext) {
-        elements.carouselNext.addEventListener('click', () => changeSlide(1));
-    }
-
-    // Close on backdrop click
-    if (elements.modalOverlay) {
-        elements.modalOverlay.addEventListener('click', (e) => {
-            if (e.target === elements.modalOverlay) {
-                closeProjectModal();
+        window.addEventListener('popstate', function (e) {
+            var caseId = e.state && e.state.caseId;
+            if (caseId) {
+                openModal(caseId, true);
+            } else if (isOpen()) {
+                closeModal(true);
             }
         });
     }
 
-    // ========================================
-    // Utilities
-    // ========================================
-    
-    function escapeHtml(text) {
-        const div = document.createElement('div');
-        div.textContent = text;
-        return div.innerHTML;
+    function openFromHash() {
+        var id = decodeURIComponent((location.hash || '').replace(/^#/, ''));
+        if (!id) return;
+        var match = projects.find(function (p) { return p.id === id && p.featured; });
+        if (match) {
+            try { history.replaceState({ caseId: id }, '', '#' + id); } catch (e) {}
+            openModal(id, true);
+        }
     }
-
 })();
