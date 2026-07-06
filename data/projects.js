@@ -1,14 +1,24 @@
-[
+window.PORTFOLIO_PROJECTS = [
   {
     "id": "billa",
     "title": "Billa",
     "tagline": "Personal finance tracker",
     "year": "2025",
-    "role": "Solo · Full-stack",
+    "role": "Solo \u00b7 Full-stack",
     "status": "Beta",
     "featured": true,
     "shortDescription": "A personal finance tracker for logging income, expenses, budgets, and goals, built on Next.js 14 and Supabase with row-level security.",
-    "tech": ["Next.js 14", "TypeScript", "Supabase", "PostgreSQL", "Tailwind CSS", "shadcn/ui", "Recharts", "Zod", "Vitest"],
+    "tech": [
+      "Next.js 14",
+      "TypeScript",
+      "Supabase",
+      "PostgreSQL",
+      "Tailwind CSS",
+      "shadcn/ui",
+      "Recharts",
+      "Zod",
+      "Vitest"
+    ],
     "repoUrl": "https://github.com/aaronaminubandado/billa",
     "liveUrl": "https://billa-beige.vercel.app",
     "images": [
@@ -36,11 +46,17 @@
     "title": "BlueNestBot",
     "tagline": "AI-assisted real-estate chatbot",
     "year": "2026",
-    "role": "Solo · Backend",
+    "role": "Solo \u00b7 Backend",
     "status": "Live",
     "featured": true,
     "shortDescription": "A Telegram chatbot for a real-estate agency that answers questions, captures leads, and falls back to an AI model when no rule matches.",
-    "tech": ["Node.js", "Telegraf", "Telegram Bot API", "OpenRouter AI", "REST"],
+    "tech": [
+      "Node.js",
+      "Telegraf",
+      "Telegram Bot API",
+      "OpenRouter AI",
+      "REST"
+    ],
     "repoUrl": "https://github.com/aaronaminubandado/bluenest-bot",
     "liveUrl": "",
     "images": [
@@ -51,7 +67,7 @@
       "problem": "A real-estate agency needed to respond to buyers and renters instantly, capture their details, and hand off to a human when needed, without paying for an AI call on every single message.",
       "constraints": "Responses had to stay on-brand and predictable, AI usage had to be minimised for cost and safety, and admin identifiers could not be hard-coded in a public repo.",
       "approach": "A layered message pipeline that resolves the cheapest, most predictable handler first and only reaches for the AI model when nothing else matches.",
-      "architecture": "Built on the Telegraf framework. Incoming messages flow through an ordered pipeline: commands → active lead-capture sessions → common replies → rule-based FAQ matching → human-escalation triggers → AI fallback. A structured business context (services, hours, tone, escalation policy) is injected into AI requests.",
+      "architecture": "Built on the Telegraf framework. Incoming messages flow through an ordered pipeline: commands \u2192 active lead-capture sessions \u2192 common replies \u2192 rule-based FAQ matching \u2192 human-escalation triggers \u2192 AI fallback. A structured business context (services, hours, tone, escalation policy) is injected into AI requests.",
       "decisions": [
         "Rule-first routing so predictable intents never hit the AI model.",
         "AI only as a fallback, grounded with business context to keep replies safe and relevant.",
@@ -68,11 +84,17 @@
     "title": "Jia's Gadgets",
     "tagline": "E-commerce storefront",
     "year": "2025",
-    "role": "Solo · Frontend",
+    "role": "Solo \u00b7 Frontend",
     "status": "Live",
     "featured": true,
     "shortDescription": "A React e-commerce storefront that consumes a REST API for products and auth, with a Stripe-based checkout flow.",
-    "tech": ["React", "JavaScript", "REST API", "Stripe", "Netlify"],
+    "tech": [
+      "React",
+      "JavaScript",
+      "REST API",
+      "Stripe",
+      "Netlify"
+    ],
     "repoUrl": "https://github.com/aaronaminubandado/jias-gadgets.git",
     "liveUrl": "https://jiasgadgets.netlify.app/",
     "images": [
@@ -94,4 +116,4 @@
       "lessons": "Designing explicit integration seams up front makes a frontend genuinely ready for full-stack integration."
     }
   }
-]
+];
