@@ -1,211 +1,70 @@
-# My Portfolio
+# Aaron Bandado — Portfolio
 
-A modern, accessible, and fully static portfolio built with semantic HTML, CSS, and JavaScript. Deployable to GitHub Pages with no build step required.
+A fast, accessible, static portfolio built with semantic HTML, CSS, and vanilla JavaScript. No build step, no dependencies — deployable straight to GitHub Pages.
+
+## Design system
+
+- **Type:** Space Grotesk (display), Inter (body), JetBrains Mono (metadata)
+- **Color:** paper + ink with a single cobalt accent (`--accent: #2f43e0`), full light/dark theming via `data-theme`
+- **Tokens:** all color, type, spacing, radius, and motion values live as CSS custom properties at the top of `styles/main.css`
 
 ## Features
 
-- Fully responsive (mobile, tablet, desktop)
-- Data-driven project management via JSON
-- Modal with image carousel (swipe support on mobile)
-- Keyboard navigation (arrow keys + ESC for modal)
-- Focus trap for accessibility
-- Dark/Light theme toggle
-- Lazy loading images
-- Semantic HTML with ARIA labels
+- Responsive, left-aligned editorial layout
+- Light/dark theme with system-preference detection and no flash on load
+- Data-driven projects presented as engineering case studies (`data/projects.json`)
+- Deep-linkable case-study modal (`/#billa`) with image carousel, keyboard nav, and focus trap
+- Scroll-reveal with `prefers-reduced-motion` support
+- Semantic HTML, skip link, ARIA labels, visible focus states
+- SEO: descriptive metadata, Open Graph tags, JSON-LD `Person`, SVG favicon
 
-## File Structure
+## Structure
 
 ```
-/
-├── index.html              # Main HTML file
-├── styles/
-│   └── main.css           # All styles
-├── scripts/
-│   └── main.js            # JavaScript functionality
-├── data/
-│   └── projects.json      # Project data
-├── assets/
-│   ├── placeholder.png    # Fallback image
-│   ├── profile-pic-1.jpg # Profile image
-│   ├── about-pic.jpg     # About section image
-│   └── projects/         # Project screenshots
-│       ├── jias-gadgets/
-│       ├── billa/
-│       └── ezclean/
-└── README.md
+├── index.html            # Markup for all sections + modal
+├── styles/main.css       # Design tokens + all component styles
+├── scripts/main.js       # Nav, theme, project rendering, modal, carousel
+├── data/projects.json    # Project + case-study content
+└── assets/
+    ├── Aaron Aminu Bandado Resume.pdf
+    ├── about-pic.jpg      # (add) About-section portrait
+    └── projects/<slug>/   # (add) Screenshots, named 1.png, 2.png, …
 ```
 
-## Quick Start
+## Run locally
 
-1. Clone the repository
-2. Open `index.html` in your browser
-3. No build step or server required
+Open `index.html` directly, or serve the folder:
 
-## How to Deploy to GitHub Pages
-
-1. Go to your repository on GitHub
-2. Navigate to **Settings** > **Pages**
-3. Under **Source**, select `main` branch
-4. Click **Save**
-5. Wait 1-2 minutes for deployment
-
-Your site will be available at: `https://yourusername.github.io`
-
-## How to Add/Edit Projects
-
-### 1. Edit Project Data
-
-Open `data/projects.json` and modify or add projects:
-
-```json
-[
-  {
-    "id": "unique-project-slug",
-    "title": "Project Title",
-    "shortDescription": "Brief 10-15 word summary for the project card.",
-    "longDescription": "Full description shown in the modal. Can be 2-3 sentences.",
-    "tech": ["React", "Node.js", "MongoDB"],
-    "repoUrl": "https://github.com/yourusername/project",
-    "liveUrl": "https://project-demo.com",
-    "images": [
-      "./assets/projects/project-slug/1.png",
-      "./assets/projects/project-slug/2.png"
-    ]
-  }
-]
+```bash
+python3 -m http.server 8000   # then visit http://localhost:8000
 ```
 
-### 2. Add Project Images
+## Editing projects
 
-1. Create a folder: `assets/projects/<project-slug>/`
-2. Add screenshots (recommended: 1200x800px, PNG/JPG)
-3. Reference them in `projects.json`
+Each entry in `data/projects.json` supports:
 
-### Project Schema Reference
+| Field | Type | Notes |
+|-------|------|-------|
+| `id` | string | kebab-case slug; also the modal deep-link hash |
+| `title`, `tagline` | string | |
+| `year`, `role`, `status` | string | shown as monospaced metadata |
+| `featured` | boolean | `true` → full case-study row; `false` → "More on GitHub" card linking to the repo |
+| `shortDescription` | string | card summary |
+| `tech` | string[] | stack tags |
+| `repoUrl`, `liveUrl` | string | `liveUrl` may be empty |
+| `images` | string[] | screenshots; empty shows a branded placard |
+| `caseStudy` | object | `overview`, `problem`, `constraints`, `approach`, `architecture`, `decisions[]`, `challenges`, `results`, `lessons` |
 
-| Field | Type | Required | Description |
-|-------|------|----------|-------------|
-| `id` | string | Yes | Unique identifier (use kebab-case) |
-| `title` | string | Yes | Project title |
-| `shortDescription` | string | Yes | Brief summary (10-15 words) |
-| `longDescription` | string | Yes | Full description (2-3 sentences) |
-| `tech` | array | Yes | List of technologies |
-| `repoUrl` | string | Yes | GitHub repository URL |
-| `liveUrl` | string | No | Live demo URL (empty string if none) |
-| `images` | array | Yes | Array of image paths |
+Fields beginning with `TODO` render in a muted style as visible placeholders — fill them in as the content becomes available.
 
-## How to Edit Personal Information
+## Adding images
 
-### Change Name & Title
+1. Drop screenshots into `assets/projects/<slug>/` (recommended 1200×750, PNG/JPG).
+2. List them in the project's `images` array.
+3. The first image is the card thumbnail and the first carousel slide.
 
-In `index.html`:
-```html
-<h1 class="hero-name">Your Name</h1>
-<p class="hero-title">Your Title</p>
-```
+Add your portrait as `assets/about-pic.jpg`; until then the About section shows an initials placard.
 
-### Update Resume
+## Deploy (GitHub Pages)
 
-Replace `assets/Aaron Aminu Bandado Resume.pdf` with your resume (keep the same filename or update the link in the HTML).
-
-### Update Social Links
-
-In `index.html`, find and update:
-- LinkedIn: `href="https://www.linkedin.com/in/your-profile/"`
-- GitHub: `href="https://github.com/yourusername"`
-- Email: `href="mailto:your@email.com"`
-
-### Update About Section
-
-1. Replace `assets/about-pic.jpg` with your photo
-2. Edit the about content in `index.html`
-
-## How to Change Theme Colors
-
-In `styles/main.css`, modify the CSS variables:
-
-```css
-:root {
-    /* Accent Color */
-    --color-accent: #2563eb;
-    --color-accent-hover: #1d4ed8;
-    
-    /* Light Mode Colors */
-    --color-bg: #ffffff;
-    --color-text: #212529;
-    
-    /* Dark Mode Colors */
-    --color-dark-bg: #121212;
-    --color-dark-text: #e9ecef;
-}
-```
-
-## How to Add New Skills
-
-In `index.html`, find the Skills section and add new skill categories:
-
-```html
-<div class="skill-category">
-    <h4>Category Name</h4>
-    <ul class="skill-list">
-        <li class="skill-tag">
-            <svg>...</svg>
-            Skill Name
-        </li>
-    </ul>
-</div>
-```
-
-## Accessibility Features
-
-- Semantic HTML5 elements
-- ARIA labels and roles
-- Keyboard navigation
-- Focus management in modal
-- Focus trap in modal
-- Skip links support
-- Alt text for all images
-- Lazy loading images
-
-## Keyboard Shortcuts
-
-| Key | Action |
-|-----|--------|
-| `Escape` | Close modal / Close mobile menu |
-| `Arrow Left` | Previous image in carousel |
-| `Arrow Right` | Next image in carousel |
-| `Tab` | Navigate focusable elements |
-
-## Mobile Gestures
-
-- Swipe left: Next image in carousel
-- Swipe right: Previous image in carousel
-
-## Browser Support
-
-- Chrome (latest)
-- Firefox (latest)
-- Safari (latest)
-- Edge (latest)
-
-## Testing Checklist
-
-- [ ] Open index.html in browser
-- [ ] Check responsive layout on mobile, tablet, desktop
-- [ ] Click project cards to open modal
-- [ ] Test carousel navigation (buttons + arrows)
-- [ ] Test swipe gestures on mobile
-- [ ] Test ESC key closes modal
-- [ ] Test Tab navigation in modal (focus trap)
-- [ ] Toggle dark/light mode
-- [ ] Check all images load (or show placeholder)
-- [ ] Verify resume PDF downloads
-- [ ] Test all external links open correctly
-
-## Notes
-
-- All paths are relative for GitHub Pages subpath compatibility
-- No build step required
-- No environment variables needed
-- No API keys required
-- Safe for public repository hosting
+Settings → Pages → Source: `main` branch. All paths are relative, so it works from a project subpath too.
