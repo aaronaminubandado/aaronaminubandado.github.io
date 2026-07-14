@@ -178,7 +178,8 @@ ul { list-style: none; }
 }
 
 .section {
-    padding-block: var(--space-9);
+    padding-top: var(--space-7);
+    padding-bottom: var(--space-9);
     border-top: 1px solid var(--border);
 }
 
@@ -447,7 +448,7 @@ ul { list-style: none; }
 main { padding-top: var(--nav-height); }
 
 .hero {
-    padding-top: var(--space-6);
+    padding-top: var(--space-7);
     padding-bottom: var(--space-8);
 }
 
@@ -620,6 +621,21 @@ main { padding-top: var(--nav-height); }
     color: var(--text-secondary);
 }
 
+.project-actions {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: var(--space-3) var(--space-6);
+    margin-top: var(--space-1);
+}
+
+.btn-sm {
+    padding: 0.55rem 0.95rem;
+    font-size: var(--text-xs);
+}
+
+.btn-sm .btn-icon { width: 16px; height: 16px; }
+
 .project-cta {
     display: inline-flex;
     align-items: center;
@@ -666,8 +682,6 @@ main { padding-top: var(--nav-height); }
     justify-content: center;
     gap: var(--space-4);
     margin-top: var(--space-5);
-    padding-top: var(--space-5);
-    border-top: 1px solid var(--border);
 }
 
 .work-carousel-btn {

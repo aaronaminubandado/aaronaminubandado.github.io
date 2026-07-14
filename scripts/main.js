@@ -47,7 +47,6 @@
             title: byId('modal-title'),
             overview: byId('modal-overview'),
             tech: byId('modal-tech'),
-            caseStudy: byId('modal-casestudy'),
             repo: byId('modal-repo'),
             live: byId('modal-live'),
             trapStart: byId('focus-trap-start'),
@@ -183,11 +182,21 @@
                     '<h3 class="project-title">' + esc(p.title) + '</h3>' +
                     '<p class="project-desc">' + esc(p.shortDescription) + '</p>' +
                     '<div class="tag-row">' + tags(p.tech, 5) + '</div>' +
-                    '<button class="project-cta" type="button" data-id="' + esc(p.id) + '" ' +
-                    'aria-label="Read the ' + esc(p.title) + ' case study">' +
-                        'Read case study ' +
-                        '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg>' +
-                    '</button>' +
+                    '<div class="project-actions">' +
+                        '<button class="project-cta" type="button" data-id="' + esc(p.id) + '" ' +
+                        'aria-label="View more about ' + esc(p.title) + '">' +
+                            'View more ' +
+                            '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg>' +
+                        '</button>' +
+                        (p.liveUrl
+                            ? '<a href="' + esc(p.liveUrl) + '" class="btn btn-primary btn-sm" target="_blank" rel="noopener noreferrer" ' +
+                              'aria-label="Open ' + esc(p.title) + ' live demo">' +
+                                '<svg class="btn-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true">' +
+                                    '<path d="M18 13v6a2 2 0 01-2 2H5a2 2 0 01-2-2V8a2 2 0 012-2h6M15 3h6v6M10 14L21 3"/>' +
+                                '</svg>Live demo' +
+                              '</a>'
+                            : '') +
+                    '</div>' +
                 '</div>' +
                 frame(p) +
             '</article>';
@@ -302,19 +311,6 @@
     }
 
     /* -------------------------------------------------------------- Modal */
-    function block(label, value) {
-        if (!value) return '';
-        var isTodo = /^todo/i.test(String(value).trim());
-        return '<div class="case-block"><h4>' + esc(label) + '</h4>' +
-            '<p' + (isTodo ? ' class="todo"' : '') + '>' + esc(value) + '</p></div>';
-    }
-
-    function listBlock(label, arr) {
-        if (!arr || !arr.length) return '';
-        var items = arr.map(function (i) { return '<li>' + esc(i) + '</li>'; }).join('');
-        return '<div class="case-block"><h4>' + esc(label) + '</h4><ul>' + items + '</ul></div>';
-    }
-
     function openModal(id, fromHistory) {
         var p = projects.find(function (x) { return x.id === id; });
         if (!p) return;
@@ -326,17 +322,6 @@
         el.title.textContent = p.title;
         el.overview.textContent = (p.caseStudy && p.caseStudy.overview) || p.longDescription || p.shortDescription || '';
         el.tech.innerHTML = tags(p.tech, p.tech.length);
-
-        var cs = p.caseStudy || {};
-        el.caseStudy.innerHTML =
-            block('Problem', cs.problem) +
-            block('Constraints', cs.constraints) +
-            block('Approach', cs.approach) +
-            block('Architecture', cs.architecture) +
-            listBlock('Key decisions', cs.decisions) +
-            block('Challenges', cs.challenges) +
-            block('Results', cs.results) +
-            block('Lessons', cs.lessons);
 
         el.repo.href = p.repoUrl || '#';
         el.repo.style.display = p.repoUrl ? 'inline-flex' : 'none';
