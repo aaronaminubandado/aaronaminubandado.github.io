@@ -1,5 +1,35 @@
 [
   {
+    "id": "invoice-flow",
+    "title": "InvoiceFlow",
+    "tagline": "Invoice and receipt management",
+    "year": "2026",
+    "role": "Solo · Full-stack",
+    "status": "Live",
+    "featured": true,
+    "shortDescription": "A monorepo for small-business invoicing: FastAPI backend with PDF emails and payment tracking, plus a React/Vite SPA on Supabase auth.",
+    "tech": ["FastAPI", "Python", "React", "TypeScript", "Vite", "PostgreSQL", "Supabase", "Tailwind CSS", "TanStack Query"],
+    "repoUrl": "https://github.com/aaronaminubandado/invoice-flow",
+    "liveUrl": "https://invoice-flow-ashy.vercel.app/",
+    "images": [],
+    "caseStudy": {
+      "overview": "InvoiceFlow is a small-business invoice and receipt system built as a monorepo: a FastAPI API for invoice lifecycle, payments, PDF generation, and email delivery, and a React/Vite SPA for the product UI.",
+      "problem": "Small businesses need to create invoices, track payments, send branded PDFs, and chase overdue clients without juggling spreadsheets and manual email.",
+      "constraints": "Solo full-stack build across a Python API and a TypeScript frontend, with auth and data on Supabase/PostgreSQL and email via Resend.",
+      "approach": "Model invoices as a state machine (draft → sent → partial/paid/overdue → cancelled), generate PDFs with ReportLab, send them via Resend, and drive the UI from typed API contracts generated from the OpenAPI spec.",
+      "architecture": "Monorepo with apps/api (FastAPI, SQLAlchemy 2.0 async, APScheduler reminders) and apps/web (React 19, Vite, TanStack Query, Tailwind). Supabase JWT auth on the API; web deployed to Vercel.",
+      "decisions": [
+        "Separate FastAPI backend and React SPA so invoice logic, PDFs, and scheduled reminders stay server-side.",
+        "Generate TypeScript API types from the OpenAPI spec to keep frontend and backend contracts in sync.",
+        "Invoice status as an explicit state machine with concurrency-safe numbering and overpayment guards.",
+        "Tiered overdue reminders via APScheduler instead of relying on the client to poll."
+      ],
+      "challenges": "Coordinating async database work, PDF/email delivery, and scheduled overdue detection while keeping auth and exports reliable across CSV, Excel, and PDF.",
+      "results": "Live web app on Vercel with a documented API covering invoices, clients, metrics, settings, and payment webhooks.",
+      "lessons": "A clear monorepo boundary plus OpenAPI-generated types makes a full-stack invoice product easier to extend without drifting contracts."
+    }
+  },
+  {
     "id": "billa",
     "title": "Billa",
     "tagline": "Personal finance tracker",
